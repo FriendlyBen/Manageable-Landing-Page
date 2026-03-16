@@ -1,7 +1,6 @@
-import AutomatedReportCarousel from "@/components/automated-report-carousel";
-import CapabilityCarousel from "@/components/capability-carousel";
-import ManagementDashboardCarousel from "@/components/management-dashboard-carousel";
+import CapabilitiesShowcase from "@/components/capabilities-showcase";
 import Image from "next/image";
+import heroScreenshot from "@/assets/desktop+mobile_cropped-Photoroom.png";
 import excelLogo from "@/assets/excel_logo.png";
 import googleDriveLogo from "@/assets/google_drive_logo.png";
 import whatsAppLogo from "@/assets/WhatsApp_Logo_green.svg";
@@ -27,29 +26,6 @@ const pains = [
     detail:
       "Management decisions rely on stale summaries, so risks are often visible only after cost and schedule impact.",
     impact: "Delays intervention on critical issues"
-  }
-];
-
-const capabilities = [
-  {
-    title: "Capture Site Data Once",
-    caption: "Standardized daily logs and field records in one structured flow.",
-    metric: "Daily"
-  },
-  {
-    title: "Generate Reports Automatically",
-    caption: "Transform field inputs into management-ready reports without end-month crunch.",
-    metric: "Auto"
-  },
-  {
-    title: "Track Progress Across Projects",
-    caption: "See project status and trends across sites from one dashboard.",
-    metric: "Live"
-  },
-  {
-    title: "Give Management Real-Time Visibility",
-    caption: "Surface blockers, momentum, and priority actions clearly.",
-    metric: "Now"
   }
 ];
 
@@ -113,36 +89,13 @@ export default function HomePage() {
             </div>
 
             <div className="hero-visual" aria-hidden="true">
-              <div className="orbit ring-1" />
-              <div className="orbit ring-2" />
-              <div className="orbit ring-3" />
-              <div className="center-stat">
-                <strong>Live</strong>
-                <span>Pilot Rollout in Progress</span>
-              </div>
-              <div className="orbit-motion">
-                <div className="orbit-item item-pm">
-                  <div className="node">PM</div>
-                </div>
-                <div className="orbit-item item-qs">
-                  <div className="node">QS</div>
-                </div>
-                <div className="orbit-item item-se">
-                  <div className="node">SE</div>
-                </div>
-                <div className="orbit-item item-cm">
-                  <div className="node">CM</div>
-                </div>
-                <div className="orbit-item item-chip-a">
-                  <div className="chip" />
-                </div>
-                <div className="orbit-item item-chip-b">
-                  <div className="chip" />
-                </div>
-                <div className="orbit-item item-chip-c">
-                  <div className="chip" />
-                </div>
-              </div>
+              <Image
+                src={heroScreenshot}
+                alt=""
+                className="hero-shot"
+                priority
+                sizes="(max-width: 760px) 92vw, 42vw"
+              />
             </div>
           </div>
         </div>
@@ -225,33 +178,7 @@ export default function HomePage() {
           <p className="eyebrow">What your teams can do with Manageable</p>
           <h2>Simple execution flow for construction teams that need clarity now.</h2>
         </div>
-
-        <div className="capability-grid">
-          {capabilities.map((capability, index) => (
-            <article className="capability-card" key={capability.title}>
-              <div className="capability-copy">
-                <h3>{capability.title}</h3>
-                <p>{capability.caption}</p>
-              </div>
-              <div className="capability-visual">
-                {index === 0 ? (
-                  <CapabilityCarousel compact />
-                ) : index === 1 ? (
-                  <AutomatedReportCarousel />
-                ) : index === 2 ? (
-                  <CapabilityCarousel compact mode="projects" />
-                ) : index === 3 ? (
-                  <ManagementDashboardCarousel />
-                ) : (
-                  <div className="mock-ui">
-                    <span>{capability.metric}</span>
-                    <div className="mock-lines" />
-                  </div>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
+        <CapabilitiesShowcase />
       </section>
 
       <section className="authority">
