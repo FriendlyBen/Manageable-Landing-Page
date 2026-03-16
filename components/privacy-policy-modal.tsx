@@ -1,0 +1,73 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import PrivacyPolicyContent from "@/components/privacy-policy-content";
+
+const PRIVACY_MODAL_KEY = "manageable-privacy-policy-seen-v2";
+
+export default function PrivacyPolicyModal() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const hasSeenPolicy = window.localStorage.getItem(PRIVACY_MODAL_KEY);
+
+    if (!hasSeenPolicy) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isVisible]);
+
+  const closeModal = () => {
+    window.localStorage.setItem(PRIVACY_MODAL_KEY, "true");
+    setIsVisible(false);
+  };
+
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <div className="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+      <div className="privacy-modal-backdrop" aria-hidden="true" />
+      <div className="privacy-modal-panel">
+        <button type="button" className="privacy-modal-close" onClick={closeModal} aria-label="Close privacy policy">
+          X
+        </button>
+        <div className="privacy-modal-header">
+          <p className="privacy-modal-kicker">Before you continue</p>
+          <h2 id="privacy-modal-title">Privacy Policy</h2>
+          <p className="privacy-modal-lead">
+            Please review how we handle your contact details before booking a demo or sending us a message.
+          </p>
+        </div>
+        <div className="privacy-modal-body">
+          <div className="privacy-modal-scrollbox">
+            <div className="privacy-modal-scroll">
+              <PrivacyPolicyContent showIntro={false} />
+            </div>
+          </div>
+        </div>
+        <div className="privacy-modal-footer">
+          <div className="privacy-modal-actions">
+            <button type="button" className="btn primary privacy-modal-accept" onClick={closeModal}>
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

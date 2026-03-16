@@ -115,6 +115,7 @@ export default function CapabilitiesShowcase() {
   } as CSSProperties);
   const railRef = useRef<HTMLDivElement | null>(null);
   const railButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const hasMountedRef = useRef(false);
   const activeFeature = features[activeIndex];
 
   useEffect(() => {
@@ -149,6 +150,11 @@ export default function CapabilitiesShowcase() {
   }, []);
 
   useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+
     railButtonRefs.current[activeIndex]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",

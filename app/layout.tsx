@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
-
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"]
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.your-saas-domain.com"),
@@ -29,7 +23,7 @@ export const metadata: Metadata = {
     title: "Manageable | Construction Data Structured, Reports Automated",
     description:
       "From site records to management reports, automatically. Built for contractors, developers, and project teams.",
-    url: "https://www.your-saas-domain.com",
+    url: "https://manageable.my",
     siteName: "Manageable",
     locale: "en_US",
     type: "website"
@@ -60,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

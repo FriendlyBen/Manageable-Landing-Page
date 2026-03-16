@@ -25,7 +25,7 @@ body {
 
 body {
   color: var(--ink);
-  font-family: var(--font-roboto), sans-serif;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   overflow-x: clip;
   background:
@@ -145,7 +145,7 @@ p {
 }
 
 .hero h1 {
-  font-family: var(--font-roboto), sans-serif;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(2rem, 5.2vw, 4.55rem);
   max-width: 12ch;
   font-weight: 800;
@@ -2767,6 +2767,22 @@ p {
   background: #f5c33f;
 }
 
+.form-disclaimer {
+  margin-top: 0.2rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.form-disclaimer a {
+  color: var(--purple-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.form-disclaimer a:hover {
+  text-decoration: underline;
+}
+
 .contact-number {
   margin-top: 0.85rem;
   display: flex;
@@ -2808,6 +2824,224 @@ p {
   box-shadow: 0 6px 14px rgba(43, 21, 67, 0.12);
   object-fit: contain;
   flex: 0 0 auto;
+}
+
+.site-footer {
+  margin: 0 0 2.2rem;
+  padding: 1.3rem 0 0;
+  border-top: 1px solid rgba(154, 23, 232, 0.14);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.site-footer-copy {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.9rem;
+}
+
+.site-footer-links a {
+  color: #2b1543;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.site-footer-links a:hover {
+  text-decoration: underline;
+}
+
+.policy-page {
+  min-height: 100vh;
+  padding: 3rem 0;
+}
+
+.policy-shell {
+  width: min(760px, 92vw);
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 50px rgba(83, 38, 128, 0.1);
+}
+
+.policy-eyebrow {
+  margin-bottom: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--purple);
+}
+
+.policy-shell h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.policy-updated {
+  margin-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.policy-lead {
+  margin-top: 1rem;
+  max-width: 62ch;
+  color: #2d2640;
+}
+
+.policy-section {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.policy-section h2 {
+  font-size: 1.16rem;
+}
+
+.policy-section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.policy-shell a,
+.policy-actions a {
+  color: var(--purple-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.policy-shell a:hover,
+.policy-actions a:hover {
+  text-decoration: underline;
+}
+
+.policy-actions {
+  margin-top: 2rem;
+}
+
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+}
+
+.privacy-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 10, 31, 0.58);
+  backdrop-filter: blur(6px);
+}
+
+.privacy-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  max-height: min(88vh, 920px);
+  padding: 1.2rem 1.2rem 1rem;
+  border-radius: 1.3rem;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(30, 14, 47, 0.28);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.9rem;
+}
+
+.privacy-modal-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(154, 23, 232, 0.08);
+  color: #2b1543;
+  font: inherit;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.privacy-modal-header {
+  max-width: 58ch;
+  padding-right: 2.8rem;
+}
+
+.privacy-modal-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--purple);
+}
+
+.privacy-modal-header h2 {
+  margin-top: 0.2rem;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+}
+
+.privacy-modal-lead {
+  margin-top: 0.55rem;
+  color: var(--muted);
+}
+
+.privacy-modal-body {
+  min-height: 0;
+}
+
+.privacy-modal-scrollbox {
+  height: min(54vh, 460px);
+  min-height: 280px;
+  border: 1px solid rgba(154, 23, 232, 0.16);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(245, 234, 255, 0.55), rgba(255, 255, 255, 0.95));
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.privacy-modal-scroll {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 0.45rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.privacy-modal-scroll .policy-updated {
+  margin-top: 0;
+}
+
+.privacy-modal-scroll .policy-section:first-of-type {
+  margin-top: 0.6rem;
+}
+
+.privacy-modal-footer {
+  padding-top: 0.1rem;
+}
+
+.privacy-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.privacy-modal-accept {
+  min-width: 132px;
 }
 
 .authority {
@@ -3665,6 +3899,10 @@ p {
     min-height: 120px;
   }
 
+  .form-disclaimer {
+    font-size: 0.84rem;
+  }
+
   .contact-number {
     gap: 0.7rem;
     font-size: 1.08rem;
@@ -3674,6 +3912,23 @@ p {
   .contact-number a {
     padding: 0.5rem 0.8rem;
     margin-left: 0;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-footer-links {
+    justify-content: flex-start;
+  }
+
+  .privacy-modal-panel {
+    padding: 1rem;
+  }
+
+  .privacy-modal-header {
+    padding-right: 2.2rem;
   }
 }
 
@@ -3741,6 +3996,52 @@ p {
   }
 
   .capabilities-stage {
+    padding: 0.8rem;
+  }
+
+  .policy-page {
+    padding: 1.4rem 0 2.2rem;
+  }
+
+  .policy-shell {
+    width: min(100%, 95vw);
+    padding: 1.2rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .policy-shell h1 {
+    font-size: 1.7rem;
+  }
+
+  .policy-section h2 {
+    font-size: 1.02rem;
+  }
+
+  .privacy-modal {
+    padding: 0.6rem;
+  }
+
+  .privacy-modal-panel {
+    max-height: 92vh;
+    padding: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  .privacy-modal-header {
+    padding-right: 2rem;
+  }
+
+  .privacy-modal-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .privacy-modal-lead {
+    font-size: 0.92rem;
+  }
+
+  .privacy-modal-scrollbox {
+    height: min(50vh, 420px);
+    min-height: 240px;
     padding: 0.8rem;
   }
 

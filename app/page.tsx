@@ -1,5 +1,7 @@
 import CapabilitiesShowcase from "@/components/capabilities-showcase";
+import PrivacyPolicyModal from "@/components/privacy-policy-modal";
 import Image from "next/image";
+import Link from "next/link";
 import heroScreenshot from "@/assets/desktop+mobile_cropped-Photoroom.png";
 import excelLogo from "@/assets/excel_logo.png";
 import googleDriveLogo from "@/assets/google_drive_logo.png";
@@ -45,8 +47,11 @@ const softwareSchema = {
 };
 
 export default function HomePage() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <main className="page">
+      <PrivacyPolicyModal />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
@@ -73,8 +78,8 @@ export default function HomePage() {
             <div className="hero-copy">
               {/* <p className="eyebrow">Construction Management SaaS</p> */}
               <h1 className="hero-title">
-                <span className="hero-line hero-line-1">From Site Records</span>
-                <span className="hero-line hero-line-2">to Management Reports</span>
+                <span className="hero-line hero-line-1">From Site Records to</span>
+                <span className="hero-line hero-line-2">Management Reports</span>
                 <span className="hero-line hero-line-3">— Automatically.</span>
               </h1>
               <p className="lead">Built for G7 Main Contractors, Developers, and Project Teams managing complex sites.</p>
@@ -298,6 +303,11 @@ export default function HomePage() {
               Send Email
             </button>
 
+            <p className="form-disclaimer">
+              By contacting us, you agree that we may use your details to respond to your enquiry and arrange a demo.
+              <Link href="/privacy-policy"> Read our Privacy Policy</Link>.
+            </p>
+
             <p className="contact-number">
               <span className="contact-number-label">Or, contact us at:</span>
               <a href="https://wa.me/60126867119" target="_blank" rel="noreferrer">
@@ -308,6 +318,18 @@ export default function HomePage() {
           </form>
         </div>
       </section>
+
+      <footer className="site-footer">
+        <div className="site-footer-copy">
+          <p>Manageable helps construction teams structure site data and automate reporting workflows.</p>
+          <p>© {currentYear} Manageable. All rights reserved.</p>
+        </div>
+        <nav className="site-footer-links" aria-label="Legal and support links">
+          <Link href="/privacy-policy">Privacy Policy</Link>
+          <a href="mailto:2001bentleyteh@gmail.com">Contact</a>
+          <a href="https://app.manageable.my">Log in</a>
+        </nav>
+      </footer>
     </main>
   );
 }
