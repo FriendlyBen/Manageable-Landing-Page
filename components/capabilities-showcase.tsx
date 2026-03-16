@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 
 import AutomatedReportCarousel from "@/components/automated-report-carousel";
 import CapabilityCarousel from "@/components/capability-carousel";
@@ -20,16 +20,16 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    eyebrow: "Structured capture",
+    eyebrow: "Data Capture",
     title: "Capture site data once in one guided flow.",
     description:
-      "Standardized field entries keep daily logs, QA records, and approvals clean before they move downstream.",
+      "Customized field entries keep daily logs, QA records, and approvals clean before they move downstream.",
     support: "A guided form flow reduces missing details and gives teams one place to start every record.",
     iconLabel: "Data capture",
     visual: <CapabilityCarousel />
   },
   {
-    eyebrow: "Auto-generated outputs",
+    eyebrow: "Auto-generated reports",
     title: "Turn field activity into reports without the month-end scramble.",
     description:
       "The same records can feed daily site reports and progress claim summaries without rebuilding the data manually.",
@@ -109,7 +109,52 @@ function FeatureIcon({ index }: { index: number }) {
 export default function CapabilitiesShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<SlideDirection>("forward");
+  const [railIndicatorStyle, setRailIndicatorStyle] = useState<CSSProperties>({
+    "--feature-rail-thumb-size": "40%",
+    "--feature-rail-thumb-offset": "0%"
+  } as CSSProperties);
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const railButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeFeature = features[activeIndex];
+
+  useEffect(() => {
+    const rail = railRef.current;
+
+    if (!rail) {
+      return;
+    }
+
+    const updateRailIndicator = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = rail;
+      const maxScroll = Math.max(scrollWidth - clientWidth, 1);
+      const visibleRatio = scrollWidth > 0 ? Math.min(clientWidth / scrollWidth, 1) : 1;
+      const thumbSize = Math.max(22, visibleRatio * 100);
+      const maxOffset = Math.max(100 - thumbSize, 0);
+      const thumbOffset = maxScroll > 0 ? (scrollLeft / maxScroll) * maxOffset : 0;
+
+      setRailIndicatorStyle({
+        "--feature-rail-thumb-size": `${thumbSize}%`,
+        "--feature-rail-thumb-offset": `${thumbOffset}%`
+      } as CSSProperties);
+    };
+
+    updateRailIndicator();
+    rail.addEventListener("scroll", updateRailIndicator, { passive: true });
+    window.addEventListener("resize", updateRailIndicator);
+
+    return () => {
+      rail.removeEventListener("scroll", updateRailIndicator);
+      window.removeEventListener("resize", updateRailIndicator);
+    };
+  }, []);
+
+  useEffect(() => {
+    railButtonRefs.current[activeIndex]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest"
+    });
+  }, [activeIndex]);
 
   const showFeature = (index: number) => {
     if (index === activeIndex) {
@@ -148,13 +193,16 @@ export default function CapabilitiesShowcase() {
         </div>
       </article>
 
-      <div className="capabilities-feature-rail" aria-label="Manageable platform features">
+      <div ref={railRef} className="capabilities-feature-rail" aria-label="Manageable platform features">
         {features.map((feature, index) => {
           const isActive = index === activeIndex;
 
           return (
             <button
               key={feature.title}
+              ref={(element) => {
+                railButtonRefs.current[index] = element;
+              }}
               type="button"
               className={isActive ? "feature-rail-item is-active" : "feature-rail-item"}
               onClick={() => showFeature(index)}
@@ -167,6 +215,12 @@ export default function CapabilitiesShowcase() {
             </button>
           );
         })}
+      </div>
+
+      <div className="feature-rail-swipe-hint" aria-hidden="true">
+        <span className="feature-rail-swipe-track" style={railIndicatorStyle}>
+          <span className="feature-rail-swipe-thumb" />
+        </span>
       </div>
     </div>
   );

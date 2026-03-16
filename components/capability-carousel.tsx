@@ -5,7 +5,7 @@ import { useState } from "react";
 const workflowSlides = [
   {
     title: "Create document in one guided flow",
-    description: "Standardized form inputs keep daily site data complete before it reaches management.",
+    description: "Customized form inputs keep daily site data complete before it reaches management.",
     variant: "form"
   },
   {
@@ -54,7 +54,7 @@ export default function CapabilityCarousel({ compact = false, mode = "workflow" 
     <div className={compact ? "capability-carousel is-compact" : "capability-carousel"} aria-label="Manageable workflow preview">
       <div className="carousel-topbar">
         <div className="carousel-copy">
-          <span className="carousel-kicker">Workflow Preview</span>
+          <span className="carousel-kicker">Document Preview</span>
           <h3>{slides[activeIndex].title}</h3>
           <p>{slides[activeIndex].description}</p>
         </div>
