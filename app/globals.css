@@ -8,6 +8,13 @@
   --purple-soft: #f5eaff;
   --dot: #efc06a;
   --shadow: 0 28px 70px rgba(128, 22, 190, 0.14);
+  --full-bleed-width: 100vw;
+}
+
+@supports (width: 100dvw) {
+  :root {
+    --full-bleed-width: 100dvw;
+  }
 }
 
 * {
@@ -67,9 +74,9 @@ p {
 }
 
 .hero {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--full-bleed-width);
+  margin-left: calc(50% - (var(--full-bleed-width) / 2));
+  margin-right: calc(50% - (var(--full-bleed-width) / 2));
   background: transparent;
   padding: clamp(1rem, 2.8vw, 2rem) 0 0.9rem;
   position: relative;
@@ -377,9 +384,9 @@ p {
 }
 
 .pain {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--full-bleed-width);
+  margin-left: calc(50% - (var(--full-bleed-width) / 2));
+  margin-right: calc(50% - (var(--full-bleed-width) / 2));
   padding: clamp(1.7rem, 3.2vw, 2.8rem) 0;
   background:
     radial-gradient(circle at 12% 8%, rgba(154, 23, 232, 0.24), transparent 30%),
@@ -2634,9 +2641,9 @@ p {
 }
 
 .strong-cta {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--full-bleed-width);
+  margin-left: calc(50% - (var(--full-bleed-width) / 2));
+  margin-right: calc(50% - (var(--full-bleed-width) / 2));
   margin-top: calc(-1 * var(--section-gap));
   border: 0;
   border-radius: 0;
@@ -3045,9 +3052,9 @@ p {
 }
 
 .authority {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--full-bleed-width);
+  margin-left: calc(50% - (var(--full-bleed-width) / 2));
+  margin-right: calc(50% - (var(--full-bleed-width) / 2));
   padding: clamp(1.4rem, 3vw, 2.3rem) 0;
   background: linear-gradient(90deg, #8700f5 0%, #c37eff 100%);
   background-size: 180% 180%;
@@ -3208,9 +3215,9 @@ p {
 }
 
 .vision {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--full-bleed-width);
+  margin-left: calc(50% - (var(--full-bleed-width) / 2));
+  margin-right: calc(50% - (var(--full-bleed-width) / 2));
   padding: 2rem 0 calc(2rem + var(--section-gap));
   text-align: center;
   background: linear-gradient(180deg, #ffffff 0%, #ffffff 68%, #f6e9ff 100%);
