@@ -270,14 +270,15 @@ export default function HomePage() {
           <article className="calendar-embed" aria-label="Google Calendar appointment schedule">
             <header>
               <span>Book A Demo</span>
-              <small>Google Calendar</small>
+              <small>Appointment Calendar</small>
             </header>
             <iframe
-              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1pJjzRq2_J-Id3C6SmUfULz6gadepEJgJzOHNGgYnaaJJ93hbue5agml2sAoYkMQ_h6lrivGoK?gv=true"
-              title="Manageable Appointment Schedule"
-              width="100%"
-              height="600"
+              src="https://calendar.zoho.com/zc/ui/embed/#calendar=zz080112303a6922b3089c7fbabd12a5fada684c7dc71285226381e6eaae31d7516e6195a9fedd04c8fc76efca74c3747e89264e0a&title=bentleyteh&type=1&language=en&timezone=Asia%2FSingapore&showTitle=1&showTimezone=1&view=day&showDetail=0&theme=1&eventColorType=light&showLogo=1"
+              title="Bookan Appointment Now!"
+              width="350"
+              height="500"
               frameBorder="0"
+              scrolling="no"
             />
           </article>
 
@@ -322,7 +323,7 @@ export default function HomePage() {
       <footer className="site-footer">
         <div className="site-footer-copy">
           <p>Manageable helps construction teams structure site data and automate reporting workflows.</p>
-          <p>© {currentYear} Manageable. All rights reserved.</p>
+          <p>© {currentYear} DTB DATABYTES SOFTWARE SERVICES. All rights reserved.</p>
         </div>
         <nav className="site-footer-links" aria-label="Legal and support links">
           <Link href="/privacy-policy">Privacy Policy</Link>

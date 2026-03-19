@@ -3,7 +3,7 @@ import PrivacyPolicyContent from "@/components/privacy-policy-content";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy Policy for Manageable website enquiries, demo bookings, and communications."
+  description: "Privacy Policy for DTB DATABYTES SOFTWARE SERVICES and Manageable website enquiries, demo bookings, and communications."
 };
 
 export default function PrivacyPolicyPage() {

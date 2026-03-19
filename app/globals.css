@@ -8,13 +8,8 @@
   --purple-soft: #f5eaff;
   --dot: #efc06a;
   --shadow: 0 28px 70px rgba(128, 22, 190, 0.14);
-  --full-bleed-width: 100vw;
-}
-
-@supports (width: 100dvw) {
-  :root {
-    --full-bleed-width: 100dvw;
-  }
+  --content-width: min(1180px, calc(100% - 2rem));
+  --content-width-narrow: min(760px, calc(100% - 2rem));
 }
 
 * {
@@ -45,7 +40,7 @@ body {
 
 .page {
   --section-gap: 3.6rem;
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin: 0 auto;
   padding: 1.4rem 0 0;
   display: grid;
@@ -74,9 +69,9 @@ p {
 }
 
 .hero {
-  width: var(--full-bleed-width);
-  margin-left: calc(50% - (var(--full-bleed-width) / 2));
-  margin-right: calc(50% - (var(--full-bleed-width) / 2));
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   background: transparent;
   padding: clamp(1rem, 2.8vw, 2rem) 0 0.9rem;
   position: relative;
@@ -99,7 +94,7 @@ p {
 .hero-shell {
   position: relative;
   z-index: 1;
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin: 0 auto;
   background: transparent;
   padding: 0;
@@ -370,7 +365,7 @@ p {
 .trust-row {
   position: relative;
   z-index: 1;
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin-left: auto;
   margin-right: auto;
   margin-top: 0.6rem;
@@ -384,9 +379,9 @@ p {
 }
 
 .pain {
-  width: var(--full-bleed-width);
-  margin-left: calc(50% - (var(--full-bleed-width) / 2));
-  margin-right: calc(50% - (var(--full-bleed-width) / 2));
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding: clamp(1.7rem, 3.2vw, 2.8rem) 0;
   background:
     radial-gradient(circle at 12% 8%, rgba(154, 23, 232, 0.24), transparent 30%),
@@ -398,7 +393,7 @@ p {
 .pain h2,
 .pain .pain-lead,
 .pain-grid {
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -2641,9 +2636,9 @@ p {
 }
 
 .strong-cta {
-  width: var(--full-bleed-width);
-  margin-left: calc(50% - (var(--full-bleed-width) / 2));
-  margin-right: calc(50% - (var(--full-bleed-width) / 2));
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   margin-top: calc(-1 * var(--section-gap));
   border: 0;
   border-radius: 0;
@@ -2654,7 +2649,7 @@ p {
 
 .strong-cta-head,
 .strong-cta-layout {
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -3052,9 +3047,9 @@ p {
 }
 
 .authority {
-  width: var(--full-bleed-width);
-  margin-left: calc(50% - (var(--full-bleed-width) / 2));
-  margin-right: calc(50% - (var(--full-bleed-width) / 2));
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding: clamp(1.4rem, 3vw, 2.3rem) 0;
   background: linear-gradient(90deg, #8700f5 0%, #c37eff 100%);
   background-size: 180% 180%;
@@ -3062,7 +3057,7 @@ p {
 }
 
 .authority-inner {
-  width: min(1180px, 92vw);
+  width: var(--content-width);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
@@ -3215,9 +3210,9 @@ p {
 }
 
 .vision {
-  width: var(--full-bleed-width);
-  margin-left: calc(50% - (var(--full-bleed-width) / 2));
-  margin-right: calc(50% - (var(--full-bleed-width) / 2));
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding: 2rem 0 calc(2rem + var(--section-gap));
   text-align: center;
   background: linear-gradient(180deg, #ffffff 0%, #ffffff 68%, #f6e9ff 100%);
@@ -3383,7 +3378,7 @@ p {
 @media (max-width: 760px) {
   .page {
     --section-gap: 3rem;
-    width: min(100%, 94vw);
+    width: min(100%, calc(100% - 1.5rem));
     gap: var(--section-gap);
     padding-top: 0.9rem;
   }
@@ -3400,7 +3395,7 @@ p {
   .pain-grid,
   .strong-cta-head,
   .strong-cta-layout {
-    width: min(100%, 94vw);
+    width: min(100%, calc(100% - 1.5rem));
   }
 
   .hero-wave {
@@ -3818,7 +3813,7 @@ p {
 
   .authority-inner {
     gap: 1rem;
-    width: min(100%, 94vw);
+    width: min(100%, calc(100% - 1.5rem));
   }
 
   .authority-copy {
@@ -3941,7 +3936,7 @@ p {
 
 @media (max-width: 560px) {
   .page {
-    width: min(100%, 95vw);
+    width: min(100%, calc(100% - 1rem));
     --section-gap: 2.5rem;
   }
 

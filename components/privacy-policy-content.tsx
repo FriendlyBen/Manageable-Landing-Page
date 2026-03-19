@@ -19,8 +19,8 @@ export default function PrivacyPolicyContent({
           <h1>Privacy Policy</h1>
           <p className="policy-updated">Last updated: {lastUpdated}</p>
           <p className="policy-lead">
-            This Privacy Policy explains how Manageable collects, uses, and protects personal information submitted through
-            this website.
+            This Privacy Policy explains how DTB DATABYTES SOFTWARE SERVICES, the company behind Manageable, collects,
+            uses, and protects personal information submitted through this website.
           </p>
         </>
       ) : (
@@ -46,7 +46,7 @@ export default function PrivacyPolicyContent({
           <li>Respond to your enquiries</li>
           <li>Schedule and provide demos</li>
           <li>Understand your operational needs and evaluate fit for our services</li>
-          <li>Follow up on requested information about Manageable</li>
+          <li>Follow up on requested information about Manageable and related services from DTB DATABYTES SOFTWARE SERVICES</li>
           <li>Improve our website and business communications</li>
         </ul>
       </section>
@@ -54,7 +54,7 @@ export default function PrivacyPolicyContent({
       <section className="policy-section">
         <h2>3. Third-party services</h2>
         <p>
-          This website may use third-party services such as Google Calendar booking links, email providers, and WhatsApp
+          This website may use third-party services such as Zoho Calendar booking links, email providers, and WhatsApp
           to help us communicate with you. When you use those services, your information may also be processed according to
           their privacy practices.
         </p>
@@ -87,7 +87,7 @@ export default function PrivacyPolicyContent({
       <section className="policy-section">
         <h2>7. Contact</h2>
         <p>
-          For privacy-related questions or requests, contact us at{" "}
+          For privacy-related questions or requests regarding DTB DATABYTES SOFTWARE SERVICES or Manageable, contact us at{" "}
           <a href="mailto:2001bentleyteh@gmail.com">2001bentleyteh@gmail.com</a>.
         </p>
       </section>
