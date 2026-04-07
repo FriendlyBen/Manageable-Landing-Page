@@ -2,44 +2,34 @@
 
 import { useState } from "react";
 
-const workflowSlides = [
-  {
-    title: "Create document in one guided flow",
-    description: "Customized form inputs keep daily site data complete before it reaches management.",
-    variant: "form"
-  },
-  {
-    title: "Review structured records instantly",
-    description: "Field entries become readable site diary records with cleaner handover and QA visibility.",
-    variant: "record"
-  }
-] as const;
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 type CapabilityCarouselProps = {
   compact?: boolean;
   mode?: "workflow" | "projects";
+  locale: Locale;
 };
 
-const projectSlides = [
-  {
-    title: "See project movement across the year",
-    description: "Timeline, heatmap, and recent activity keep multiple sites visible in one glance.",
-    variant: "overview"
-  },
-  {
-    title: "Track workflow approvals and reversions",
-    description: "Status actions and log history make process bottlenecks obvious before they snowball.",
-    variant: "status"
-  },
-  {
-    title: "Map execution flows clearly",
-    description: "Visual workflow mapping shows where records move, stall, or complete across teams.",
-    variant: "diagram"
-  }
-] as const;
-
-export default function CapabilityCarousel({ compact = false, mode = "workflow" }: CapabilityCarouselProps) {
-  const slides = mode === "projects" ? projectSlides : workflowSlides;
+export default function CapabilityCarousel({
+  compact = false,
+  mode = "workflow",
+  locale
+}: CapabilityCarouselProps) {
+  const dictionary = getDictionary(locale);
+  const baseSlides = mode === "projects" ? dictionary.workflowCarousel.projectSlides : dictionary.workflowCarousel.workflowSlides;
+  const slides = baseSlides.map((slide, index) => ({
+    ...slide,
+    variant:
+      mode === "projects"
+        ? index === 0
+          ? "overview"
+          : index === 1
+            ? "status"
+            : "diagram"
+        : index === 0
+          ? "form"
+          : "record"
+  }));
   const [activeIndex, setActiveIndex] = useState(0);
 
   const previousSlide = () => {
@@ -51,18 +41,18 @@ export default function CapabilityCarousel({ compact = false, mode = "workflow" 
   };
 
   return (
-    <div className={compact ? "capability-carousel is-compact" : "capability-carousel"} aria-label="Manageable workflow preview">
+    <div className={compact ? "capability-carousel is-compact" : "capability-carousel"} aria-label={dictionary.workflowCarousel.containerAriaLabel}>
       <div className="carousel-topbar">
         <div className="carousel-copy">
-          <span className="carousel-kicker">Document Preview</span>
+          <span className="carousel-kicker">{dictionary.workflowCarousel.kicker}</span>
           <h3>{slides[activeIndex].title}</h3>
           <p>{slides[activeIndex].description}</p>
         </div>
-        <div className="carousel-controls" aria-label="Preview navigation">
-          <button type="button" className="carousel-button" onClick={previousSlide} aria-label="Previous preview">
+        <div className="carousel-controls" aria-label={dictionary.workflowCarousel.controlsAriaLabel}>
+          <button type="button" className="carousel-button" onClick={previousSlide} aria-label={dictionary.workflowCarousel.previousAriaLabel}>
             <span aria-hidden="true">←</span>
           </button>
-          <button type="button" className="carousel-button" onClick={nextSlide} aria-label="Next preview">
+          <button type="button" className="carousel-button" onClick={nextSlide} aria-label={dictionary.workflowCarousel.nextAriaLabel}>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -118,15 +108,6 @@ export default function CapabilityCarousel({ compact = false, mode = "workflow" 
           ) : (
             <div className="carousel-figure project-overview-figure" aria-label="Project overview preview">
               <div className="overview-panel">
-                  {/* <div className="timeline-block">
-                    <strong>Project Timeline</strong>
-                    <span>1/1/2026 – 12/29/2026 (Today: 3/11/2026)</span>
-                    <div className="timeline-bar">
-                      <div className="timeline-progress" />
-                    </div>
-                    <small>19% through project</small>
-                  </div> */}
-
                 <div className="overview-split">
                   <div className="heatmap-card">
                     <div className="heatmap-head">
@@ -261,10 +242,10 @@ export default function CapabilityCarousel({ compact = false, mode = "workflow" 
                       </div>
                     </div>
                     <div className="history-item">
-                      <span className="history-dot is-red" />
+                      <span className="history-dot is-amber" />
                       <div className="history-box">
                         <strong>Pass to Inspector → Pass to QS</strong>
-                        <small>Reject · 1/26/2026, 1:13 PM</small>
+                        <small>Revert · 1/27/2026, 9:18 AM</small>
                       </div>
                     </div>
                   </div>
@@ -272,39 +253,17 @@ export default function CapabilityCarousel({ compact = false, mode = "workflow" 
               </div>
             </div>
           )
-        ) : activeIndex === 2 ? (
+        ) : (
           <div className="carousel-figure diagram-figure" aria-label="Workflow map preview">
-            <div className="diagram-shell">
-              <div className="diagram-topbar">
-                <span className="folder-pill">Folder</span>
-                <strong>General Site Diary</strong>
-                <span className="edit-pill">Edit Workflow Fields</span>
-              </div>
-              <div className="diagram-canvas">
-                <div className="diagram-node node-initial">Initial</div>
-                <div className="diagram-node node-qs">Pass to QS</div>
-                <div className="diagram-node node-inspector">Pass to Inspector</div>
-                <div className="diagram-node node-complete">Complete</div>
-                <span className="diagram-path path-a" />
-                <span className="diagram-path path-b" />
-                <span className="diagram-path path-c" />
-              </div>
+            <div className="diagram-board">
+              <div className="diagram-node diagram-node-start">Start</div>
+              <div className="diagram-node diagram-node-mid">Review</div>
+              <div className="diagram-node diagram-node-end">Approved</div>
+              <span className="diagram-line diagram-line-1" />
+              <span className="diagram-line diagram-line-2" />
             </div>
           </div>
-        ) : null}
-      </div>
-
-      <div className="carousel-dots" aria-label="Preview indicators">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.title}
-            type="button"
-            className={index === activeIndex ? "carousel-dot is-active" : "carousel-dot"}
-            onClick={() => setActiveIndex(index)}
-            aria-label={`Show preview ${index + 1}`}
-            aria-pressed={index === activeIndex}
-          />
-        ))}
+        )}
       </div>
     </div>
   );

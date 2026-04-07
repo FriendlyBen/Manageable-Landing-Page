@@ -4,19 +4,11 @@ import Image from "next/image";
 import { useState } from "react";
 import editStatusScreenshot from "@/assets/edit status .png";
 import editWorkflowFieldsScreenshot from "@/assets/edit workflow fields.png";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-const slides = [
-  {
-    title: "Customize statuses for every workflow step",
-    description: "Define the document states, actions, and handoff logic that match your real operating process."
-  },
-  {
-    title: "Edit any document field without rebuilding the system",
-    description: "Add, rename, reorder, or remove fields so each form fits the exact data your team needs to capture."
-  }
-] as const;
-
-export default function CustomizedFormsCarousel() {
+export default function CustomizedFormsCarousel({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+  const slides = dictionary.customizedForms.slides;
   const [activeIndex, setActiveIndex] = useState(0);
 
   const previousSlide = () => {
@@ -28,18 +20,18 @@ export default function CustomizedFormsCarousel() {
   };
 
   return (
-    <div className="custom-forms-preview" aria-label="Customized forms preview">
+    <div className="custom-forms-preview" aria-label={dictionary.customizedForms.containerAriaLabel}>
       <div className="carousel-topbar">
         <div className="carousel-copy">
-          <span className="carousel-kicker">Form Builder</span>
+          <span className="carousel-kicker">{dictionary.customizedForms.kicker}</span>
           <h3>{slides[activeIndex].title}</h3>
           <p>{slides[activeIndex].description}</p>
         </div>
-        <div className="carousel-controls" aria-label="Form builder navigation">
-          <button type="button" className="carousel-button" onClick={previousSlide} aria-label="Previous form builder preview">
+        <div className="carousel-controls" aria-label={dictionary.customizedForms.controlsAriaLabel}>
+          <button type="button" className="carousel-button" onClick={previousSlide} aria-label={dictionary.customizedForms.previousAriaLabel}>
             <span aria-hidden="true">←</span>
           </button>
-          <button type="button" className="carousel-button" onClick={nextSlide} aria-label="Next form builder preview">
+          <button type="button" className="carousel-button" onClick={nextSlide} aria-label={dictionary.customizedForms.nextAriaLabel}>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -47,22 +39,22 @@ export default function CustomizedFormsCarousel() {
 
       <div className="carousel-stage">
         {activeIndex === 0 ? (
-          <div className="carousel-figure builder-figure" aria-label="Workflow status customization preview">
+          <div className="carousel-figure builder-figure" aria-label={dictionary.customizedForms.statusPreviewAriaLabel}>
             <div className="builder-screenshot-shell">
               <Image
                 src={editStatusScreenshot}
-                alt="Workflow status editor showing customizable document statuses and transitions"
+                alt={dictionary.customizedForms.statusPreviewAlt}
                 className="builder-screenshot"
                 sizes="(max-width: 760px) 88vw, 42vw"
               />
             </div>
           </div>
         ) : (
-          <div className="carousel-figure builder-figure" aria-label="Document field customization preview">
+          <div className="carousel-figure builder-figure" aria-label={dictionary.customizedForms.fieldsPreviewAriaLabel}>
             <div className="builder-screenshot-shell">
               <Image
                 src={editWorkflowFieldsScreenshot}
-                alt="Workflow form editor showing customizable document fields and settings"
+                alt={dictionary.customizedForms.fieldsPreviewAlt}
                 className="builder-screenshot"
                 sizes="(max-width: 760px) 88vw, 42vw"
               />

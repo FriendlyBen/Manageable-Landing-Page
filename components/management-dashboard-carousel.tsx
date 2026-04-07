@@ -1,26 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-const slides = [
-  {
-    tab: "Financial Status",
-    title: "Financial Status",
-    subtitle: "as at Feb 2026"
-  },
-  {
-    tab: "Expenditure-Curve",
-    title: "Expenditure-Curve",
-    subtitle: "monthly bars + cumulative line"
-  },
-  {
-    tab: "Quotation",
-    title: "CE Quotation Status",
-    subtitle: "pie + table preview"
-  }
-] as const;
-
-export default function ManagementDashboardCarousel() {
+export default function ManagementDashboardCarousel({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+  const slides = dictionary.managementDashboard.slides;
   const [activeIndex, setActiveIndex] = useState(0);
 
   const previousSlide = () => {
@@ -32,9 +17,9 @@ export default function ManagementDashboardCarousel() {
   };
 
   return (
-    <div className="management-preview" aria-label="Management dashboard preview">
+    <div className="management-preview" aria-label={dictionary.managementDashboard.containerAriaLabel}>
       <div className="report-preview-top">
-        <div className="report-tabs" aria-label="Dashboard sections">
+        <div className="report-tabs" aria-label={dictionary.managementDashboard.tabsAriaLabel}>
           {slides.map((slide, index) => (
             <button
               key={slide.tab}
@@ -47,11 +32,11 @@ export default function ManagementDashboardCarousel() {
             </button>
           ))}
         </div>
-        <div className="dashboard-controls" aria-label="Dashboard navigation">
-          <button type="button" className="dashboard-arrow" onClick={previousSlide} aria-label="Previous dashboard">
+        <div className="dashboard-controls" aria-label={dictionary.managementDashboard.controlsAriaLabel}>
+          <button type="button" className="dashboard-arrow" onClick={previousSlide} aria-label={dictionary.managementDashboard.previousAriaLabel}>
             <span aria-hidden="true">←</span>
           </button>
-          <button type="button" className="dashboard-arrow" onClick={nextSlide} aria-label="Next dashboard">
+          <button type="button" className="dashboard-arrow" onClick={nextSlide} aria-label={dictionary.managementDashboard.nextAriaLabel}>
             <span aria-hidden="true">→</span>
           </button>
         </div>

@@ -6,6 +6,7 @@ import AutomatedReportCarousel from "@/components/automated-report-carousel";
 import CapabilityCarousel from "@/components/capability-carousel";
 import CustomizedFormsCarousel from "@/components/customized-forms-carousel";
 import ManagementDashboardCarousel from "@/components/management-dashboard-carousel";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 type SlideDirection = "forward" | "backward";
 
@@ -17,54 +18,6 @@ type Feature = {
   iconLabel: string;
   visual: ReactNode;
 };
-
-const features: Feature[] = [
-  {
-    eyebrow: "Data Capture",
-    title: "Capture site data once in one guided flow.",
-    description:
-      "Customized field entries keep daily logs, QA records, and approvals clean before they move downstream.",
-    support: "A guided form flow reduces missing details and gives teams one place to start every record.",
-    iconLabel: "Data capture",
-    visual: <CapabilityCarousel />
-  },
-  {
-    eyebrow: "Auto-generated reports",
-    title: "Turn field activity into reports without the month-end scramble.",
-    description:
-      "The same records can feed daily site reports and progress claim summaries without rebuilding the data manually.",
-    support: "Teams enter once, and management gets structured outputs that are easier to review and share.",
-    iconLabel: "Reports",
-    visual: <AutomatedReportCarousel />
-  },
-  {
-    eyebrow: "Cross-project tracking",
-    title: "Track momentum across projects from a single view.",
-    description:
-      "Heatmaps, activity streams, and workflow visibility make it easier to spot bottlenecks before they spread.",
-    support: "Project leads can see what is moving, what is stalled, and where follow-up is needed next.",
-    iconLabel: "Projects",
-    visual: <CapabilityCarousel mode="projects" />
-  },
-  {
-    eyebrow: "Management visibility",
-    title: "Give decision-makers a clearer real-time operating picture.",
-    description:
-      "Financial status, expenditure curves, and quotation views help leadership review progress with less guesswork.",
-    support: "The dashboard layer turns site updates into a management view that is easier to act on quickly.",
-    iconLabel: "Dashboards",
-    visual: <ManagementDashboardCarousel />
-  },
-  {
-    eyebrow: "Fully customized forms",
-    title: "Tailor every form and workflow to the way your team already works.",
-    description:
-      "Adjust statuses, transitions, and field structures so each document reflects your real approval flow and site process.",
-    support: "You are not locked into one template. Forms can evolve with the way your projects and departments operate.",
-    iconLabel: "Full Customization",
-    visual: <CustomizedFormsCarousel />
-  }
-];
 
 function FeatureIcon({ index }: { index: number }) {
   if (index === 0) {
@@ -106,7 +59,15 @@ function FeatureIcon({ index }: { index: number }) {
   );
 }
 
-export default function CapabilitiesShowcase() {
+export default function CapabilitiesShowcase({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+  const features: Feature[] = [
+    { ...dictionary.capabilities.features[0], visual: <CapabilityCarousel locale={locale} /> },
+    { ...dictionary.capabilities.features[1], visual: <AutomatedReportCarousel locale={locale} /> },
+    { ...dictionary.capabilities.features[2], visual: <CapabilityCarousel locale={locale} mode="projects" /> },
+    { ...dictionary.capabilities.features[3], visual: <ManagementDashboardCarousel locale={locale} /> },
+    { ...dictionary.capabilities.features[4], visual: <CustomizedFormsCarousel locale={locale} /> }
+  ];
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<SlideDirection>("forward");
   const [railIndicatorStyle, setRailIndicatorStyle] = useState<CSSProperties>({
@@ -114,8 +75,6 @@ export default function CapabilitiesShowcase() {
     "--feature-rail-thumb-offset": "0%"
   } as CSSProperties);
   const railRef = useRef<HTMLDivElement | null>(null);
-  const railButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const hasMountedRef = useRef(false);
   const activeFeature = features[activeIndex];
 
   useEffect(() => {
@@ -149,19 +108,6 @@ export default function CapabilitiesShowcase() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!hasMountedRef.current) {
-      hasMountedRef.current = true;
-      return;
-    }
-
-    railButtonRefs.current[activeIndex]?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest"
-    });
-  }, [activeIndex]);
-
   const showFeature = (index: number) => {
     if (index === activeIndex) {
       return;
@@ -182,7 +128,7 @@ export default function CapabilitiesShowcase() {
           <h3>{activeFeature.title}</h3>
           <p>{activeFeature.description}</p>
           <p className="capabilities-stage-support">{activeFeature.support}</p>
-          <div className="capabilities-stage-meta" aria-label="Feature position">
+          <div className="capabilities-stage-meta" aria-label={dictionary.capabilities.featurePositionAriaLabel}>
             <span>
               {String(activeIndex + 1).padStart(2, "0")} / {String(features.length).padStart(2, "0")}
             </span>
@@ -191,24 +137,19 @@ export default function CapabilitiesShowcase() {
 
         <div
           key={`visual-${activeIndex}`}
-          className={
-            direction === "forward" ? "capabilities-stage-visual is-slide-forward" : "capabilities-stage-visual is-slide-backward"
-          }
+          className={direction === "forward" ? "capabilities-stage-visual is-slide-forward" : "capabilities-stage-visual is-slide-backward"}
         >
           {activeFeature.visual}
         </div>
       </article>
 
-      <div ref={railRef} className="capabilities-feature-rail" aria-label="Manageable platform features">
+      <div ref={railRef} className="capabilities-feature-rail" aria-label={dictionary.capabilities.railAriaLabel}>
         {features.map((feature, index) => {
           const isActive = index === activeIndex;
 
           return (
             <button
               key={feature.title}
-              ref={(element) => {
-                railButtonRefs.current[index] = element;
-              }}
               type="button"
               className={isActive ? "feature-rail-item is-active" : "feature-rail-item"}
               onClick={() => showFeature(index)}
