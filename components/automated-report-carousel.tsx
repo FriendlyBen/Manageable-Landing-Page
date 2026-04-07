@@ -1,21 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-const slides = [
-  {
-    tab: "Daily Site Report",
-    title: "Laporan Harian Tapak Bina",
-    subtitle: "Structured from daily site diary records"
-  },
-  {
-    tab: "Monthly Claim",
-    title: "Summary of Monthly Progress Claim",
-    subtitle: "Compiled from progress and certified amounts"
-  }
-] as const;
-
-export default function AutomatedReportCarousel() {
+export default function AutomatedReportCarousel({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+  const slides = dictionary.automatedReports.slides;
   const [activeIndex, setActiveIndex] = useState(0);
 
   const previousSlide = () => {
@@ -27,9 +17,9 @@ export default function AutomatedReportCarousel() {
   };
 
   return (
-    <div className="report-preview" aria-label="Automated report preview">
+    <div className="report-preview" aria-label={dictionary.automatedReports.containerAriaLabel}>
       <div className="report-preview-top">
-        <div className="report-tabs" aria-label="Generated report types">
+        <div className="report-tabs" aria-label={dictionary.automatedReports.tabsAriaLabel}>
           {slides.map((slide, index) => (
             <button
               key={slide.tab}
@@ -42,11 +32,11 @@ export default function AutomatedReportCarousel() {
             </button>
           ))}
         </div>
-        <div className="dashboard-controls" aria-label="Report navigation">
-          <button type="button" className="dashboard-arrow" onClick={previousSlide} aria-label="Previous report">
+        <div className="dashboard-controls" aria-label={dictionary.automatedReports.controlsAriaLabel}>
+          <button type="button" className="dashboard-arrow" onClick={previousSlide} aria-label={dictionary.automatedReports.previousAriaLabel}>
             <span aria-hidden="true">←</span>
           </button>
-          <button type="button" className="dashboard-arrow" onClick={nextSlide} aria-label="Next report">
+          <button type="button" className="dashboard-arrow" onClick={nextSlide} aria-label={dictionary.automatedReports.nextAriaLabel}>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -162,8 +152,8 @@ export default function AutomatedReportCarousel() {
       </div>
 
       <div className="report-insight">
-        <span className="report-insight-label">Auto-Generated</span>
-        <p>Site teams capture once, and Manageable structures the output into operational and financial report formats.</p>
+        <span className="report-insight-label">{dictionary.automatedReports.insightLabel}</span>
+        <p>{dictionary.automatedReports.insightText}</p>
       </div>
     </div>
   );

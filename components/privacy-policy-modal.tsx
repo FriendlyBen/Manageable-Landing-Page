@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 
 import PrivacyPolicyContent from "@/components/privacy-policy-content";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 const PRIVACY_MODAL_KEY = "manageable-privacy-policy-seen-v2";
 
-export default function PrivacyPolicyModal() {
+export default function PrivacyPolicyModal({ locale }: { locale: Locale }) {
   const [isVisible, setIsVisible] = useState(false);
+  const dictionary = getDictionary(locale);
 
   useEffect(() => {
     const hasSeenPolicy = window.localStorage.getItem(PRIVACY_MODAL_KEY);
@@ -43,27 +45,30 @@ export default function PrivacyPolicyModal() {
     <div className="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
       <div className="privacy-modal-backdrop" aria-hidden="true" />
       <div className="privacy-modal-panel">
-        <button type="button" className="privacy-modal-close" onClick={closeModal} aria-label="Close privacy policy">
+        <button
+          type="button"
+          className="privacy-modal-close"
+          onClick={closeModal}
+          aria-label={dictionary.ui.closePrivacyPolicy}
+        >
           X
         </button>
         <div className="privacy-modal-header">
-          <p className="privacy-modal-kicker">Before you continue</p>
-          <h2 id="privacy-modal-title">Privacy Policy</h2>
-          <p className="privacy-modal-lead">
-            Please review how we handle your contact details before booking a demo or sending us a message.
-          </p>
+          <p className="privacy-modal-kicker">{dictionary.ui.beforeContinue}</p>
+          <h2 id="privacy-modal-title">{dictionary.privacyModal.title}</h2>
+          <p className="privacy-modal-lead">{dictionary.privacyModal.lead}</p>
         </div>
         <div className="privacy-modal-body">
           <div className="privacy-modal-scrollbox">
             <div className="privacy-modal-scroll">
-              <PrivacyPolicyContent showIntro={false} />
+              <PrivacyPolicyContent locale={locale} showIntro={false} />
             </div>
           </div>
         </div>
         <div className="privacy-modal-footer">
           <div className="privacy-modal-actions">
             <button type="button" className="btn primary privacy-modal-accept" onClick={closeModal}>
-              Continue
+              {dictionary.ui.continue}
             </button>
           </div>
         </div>

@@ -1,17 +1,7 @@
-import type { Metadata } from "next";
-import PrivacyPolicyContent from "@/components/privacy-policy-content";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy Policy for DTB DATABYTES SOFTWARE SERVICES and Manageable website enquiries, demo bookings, and communications."
-};
+import { defaultLocale } from "@/lib/i18n";
 
-export default function PrivacyPolicyPage() {
-  return (
-    <main className="policy-page">
-      <div className="policy-shell">
-        <PrivacyPolicyContent showBackLink />
-      </div>
-    </main>
-  );
+export default function PrivacyPolicyRedirectPage() {
+  redirect(`/${defaultLocale}/privacy-policy`);
 }

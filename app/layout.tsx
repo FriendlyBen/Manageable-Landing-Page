@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { defaultLocale, isValidLocale } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.your-saas-domain.com"),
+  metadataBase: new URL("https://manageable.my"),
   title: {
-    default: "Manageable | Construction Data Structured, Reports Automated",
+    default: "Manageable",
     template: "%s | Manageable"
   },
-  description:
-    "Manageable helps construction teams capture site data once and generate decision-ready reports automatically.",
   keywords: [
     "construction management software",
     "construction reporting",
@@ -17,23 +16,12 @@ export const metadata: Metadata = {
     "construction SaaS Malaysia",
     "project progress tracking"
   ],
-  alternates: {
-    canonical: "/"
-  },
   openGraph: {
-    title: "Manageable | Construction Data Structured, Reports Automated",
-    description:
-      "From site records to management reports, automatically. Built for contractors, developers, and project teams.",
-    url: "https://manageable.my",
     siteName: "Manageable",
-    locale: "en_US",
     type: "website"
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Manageable | Construction Data Structured, Reports Automated",
-    description:
-      "Capture site data once. Track progress across projects. Give management real-time visibility."
+    card: "summary_large_image"
   },
   robots: {
     index: true,
@@ -48,13 +36,18 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
-  children
+export default async function RootLayout({
+  children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale?: string }>;
 }>) {
+  const resolvedParams = await params;
+  const locale = isValidLocale(resolvedParams?.locale ?? "") ? resolvedParams.locale : defaultLocale;
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <Script
           async
