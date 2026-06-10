@@ -40,7 +40,7 @@ export default function PrivacyPolicyContent({
             {section.isContact ? (
               <>
                 {" "}
-                <a href="mailto:2001bentleyteh@gmail.com">2001bentleyteh@gmail.com</a>.
+                <a href="mailto:bentleyteh@databytes.my">customer@manageable.my</a>.
               </>
             ) : null}
           </p>

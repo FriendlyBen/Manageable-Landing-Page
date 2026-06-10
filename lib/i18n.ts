@@ -12,6 +12,76 @@ export function getLocaleLabel(locale: Locale): string {
   return locale === "en" ? "English" : "简体中文";
 }
 
+type SectionLink = {
+  href: string;
+  label: string;
+};
+
+type FamiliarItem = {
+  tag: string;
+  title: string;
+  detail: string;
+  impact: string;
+};
+
+type WorkStep = {
+  id: string;
+  title: string;
+  detail: string;
+  points: string[];
+};
+
+type WorkflowExample = {
+  title: string;
+  summary: string;
+  points: string[];
+};
+
+type AssessmentMetric = {
+  label: string;
+  placeholder: string;
+  note: string;
+};
+
+type AssessmentResult = {
+  label: string;
+  detail: string;
+};
+
+type AssessmentGapItem = {
+  title: string;
+  detail: string;
+};
+
+type EvidenceItem = {
+  value: string;
+  label: string;
+  detail: string;
+};
+
+type PilotPoint = {
+  title: string;
+  detail: string;
+};
+
+type PilotNote = {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  accent: string;
+  cta: string;
+};
+
+type PilotChecklistItem = {
+  title: string;
+  detail: string;
+};
+
+type VisionPoint = {
+  title: string;
+  detail: string;
+};
+
 export type Dictionary = {
   metadata: {
     homeTitle: string;
@@ -22,7 +92,6 @@ export type Dictionary = {
   ui: {
     homeAriaLabel: string;
     login: string;
-    joinNow: string;
     bookDemo: string;
     explorePlatform: string;
     privacyPolicy: string;
@@ -30,98 +99,132 @@ export type Dictionary = {
     continue: string;
     closePrivacyPolicy: string;
     beforeContinue: string;
-    bookDemoCard: string;
-    appointmentCalendar: string;
-    bookDemoCalendarAria: string;
-    formName: string;
-    formEmail: string;
-    formCompany: string;
-    sendEmail: string;
     contactUsAt: string;
     backToHome: string;
+    viewPilot: string;
+    viewAssessment: string;
   };
+  nav: SectionLink[];
   hero: {
-    line1: string;
-    line2: string;
-    line3: string;
+    eyebrow: string;
+    title: {
+      line1: string;
+      line2: string;
+    };
     lead: string;
+    visualEyebrow: string;
+    visualTitle: string;
+    featureHighlights: string[];
+    primaryCta: string;
+    secondaryCta: string;
+    trustLine: string;
+    metrics: Array<{ value: string; title: string; label: string }>;
   };
-  pains: {
+  familiar: {
     eyebrow: string;
     title: string;
     lead: string;
-    items: Array<{
-      tag: string;
+    items: FamiliarItem[];
+  };
+  howItWorks: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    steps: WorkStep[];
+  };
+  workflows: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    examples: WorkflowExample[];
+  };
+  assessment: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    calculatorTitle: string;
+    calculatorLead: string;
+    calculatorCtaTitle: string;
+    calculatorCtaDetail: string;
+    calculatorCtaIdleDetail: string;
+    aboutTitle: string;
+    aboutDetail: string;
+    metrics: AssessmentMetric[];
+    impactEyebrow: string;
+    impactTitle: string;
+    impactDetail: string;
+    impactPromptDetail: string;
+    results: AssessmentResult[];
+    gapTitle: string;
+    gapPromptTitle: string;
+    gapItems: AssessmentGapItem[];
+    meaningLabel: string;
+    meaningText: string;
+    meaningPromptText: string;
+    formTitle: string;
+    formLead: string;
+    formButton: string;
+    formSuccessButton: string;
+    formPrivacy: string;
+    formDisclaimer: string;
+    formSending: string;
+    formSuccess: string;
+    formError: string;
+    formRequiredField: string;
+    formInvalidEmail: string;
+    formFields: {
+      fullName: string;
+      company: string;
+      email: string;
+      phone: string;
+    };
+  };
+  experience: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    evidence: EvidenceItem[];
+  };
+  pilot: {
+    eyebrow: string;
+    title: string;
+    highlight: string;
+    lead: string;
+    points: PilotPoint[];
+    note: PilotNote;
+    checklist: PilotChecklistItem[];
+  };
+  vision: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    points: VisionPoint[];
+  };
+  contactSection: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    points: Array<{
       title: string;
       detail: string;
-      impact: string;
     }>;
-  };
-  capabilities: {
-    eyebrow: string;
-    title: string;
-    featurePositionAriaLabel: string;
-    railAriaLabel: string;
-    features: Array<{
-      eyebrow: string;
-      title: string;
-      description: string;
-      support: string;
-      iconLabel: string;
-    }>;
-  };
-  workflowCarousel: {
-    containerAriaLabel: string;
-    kicker: string;
-    controlsAriaLabel: string;
-    previousAriaLabel: string;
-    nextAriaLabel: string;
-    workflowSlides: Array<{ title: string; description: string }>;
-    projectSlides: Array<{ title: string; description: string }>;
-  };
-  automatedReports: {
-    containerAriaLabel: string;
-    tabsAriaLabel: string;
-    controlsAriaLabel: string;
-    previousAriaLabel: string;
-    nextAriaLabel: string;
-    insightLabel: string;
-    insightText: string;
-    slides: Array<{ tab: string; title: string; subtitle: string }>;
-  };
-  managementDashboard: {
-    containerAriaLabel: string;
-    tabsAriaLabel: string;
-    controlsAriaLabel: string;
-    previousAriaLabel: string;
-    nextAriaLabel: string;
-    slides: Array<{ tab: string; title: string; subtitle: string }>;
-  };
-  customizedForms: {
-    containerAriaLabel: string;
-    kicker: string;
-    controlsAriaLabel: string;
-    previousAriaLabel: string;
-    nextAriaLabel: string;
-    statusPreviewAriaLabel: string;
-    fieldsPreviewAriaLabel: string;
-    statusPreviewAlt: string;
-    fieldsPreviewAlt: string;
-    slides: Array<{ title: string; description: string }>;
-  };
-  authority: {
-    eyebrow: string;
-    pill: string;
-    title: string;
-    lead: string;
-    cards: Array<{ title: string; detail: string }>;
-    offer: string;
-  };
-  cta: {
-    title: string;
-    subtitle: string;
-    lead: string;
-    messagePrompt: string;
+    form: {
+      company: string;
+      companyPlaceholder: string;
+      email: string;
+      emailPlaceholder: string;
+      phone: string;
+      phonePlaceholder: string;
+      message: string;
+      messagePlaceholder: string;
+      privacy: string;
+      button: string;
+      sending: string;
+      success: string;
+      error: string;
+      requiredField: string;
+      invalidEmail: string;
+    };
     disclaimer: string;
   };
   footer: {
@@ -148,275 +251,440 @@ export type Dictionary = {
 
 const en: Dictionary = {
   metadata: {
-    homeTitle: "Manageable | Construction Data Structured, Reports Automated",
+    homeTitle:
+      "Manageable | Construction Workflow Management & Site Documentation Software Malaysia",
     homeDescription:
-      "Manageable helps construction teams capture site data once and generate decision-ready reports automatically.",
+      "Digitize construction workflows, site documentation, inspections, approvals, and reporting. Manageable helps Malaysian contractors improve visibility, reduce manual coordination, and streamline project delivery.",
     privacyTitle: "Privacy Policy",
     privacyDescription:
-      "Privacy Policy for DTB DATABYTES SOFTWARE SERVICES and Manageable website enquiries, demo bookings, and communications."
+      "Privacy Policy for DTB DATABYTES SOFTWARE SERVICES and Manageable website enquiries, demo requests, and communications.",
   },
   ui: {
     homeAriaLabel: "Manageable homepage",
     login: "Log in",
-    joinNow: "Join now",
-    bookDemo: "Book a demo",
-    explorePlatform: "Explore the platform",
+    bookDemo: "Request a demo",
+    explorePlatform: "See how it works",
     privacyPolicy: "Privacy Policy",
     contact: "Contact",
     continue: "Continue",
     closePrivacyPolicy: "Close privacy policy",
     beforeContinue: "Before you continue",
-    bookDemoCard: "Book a Demo",
-    appointmentCalendar: "Appointment Calendar",
-    bookDemoCalendarAria: "Appointment calendar",
-    formName: "Name",
-    formEmail: "Work Email",
-    formCompany: "Company",
-    sendEmail: "Send Email",
-    contactUsAt: "Or, contact us at:",
-    backToHome: "Back to home"
+    contactUsAt: "Direct contact",
+    backToHome: "Back to home",
+    viewPilot: "See pilot scope",
+    viewAssessment: "Preview the assessment",
   },
+  nav: [
+    { href: "#familiar", label: "Pain Points" },
+    { href: "#how-it-works", label: "How It Works" },
+    { href: "#assessment", label: "Assessment" },
+    { href: "#contact-demo", label: "Contact" },
+  ],
   hero: {
-    line1: "From Site Records to",
-    line2: "Management Reports",
-    line3: "Automatically.",
-    lead: "Built for G7 Main Contractors, Developers, and Project Teams managing complex sites."
+    eyebrow: "Construction operations infrastructure",
+    title: {
+      line1: "Digitize Construction\nWorkflows.",
+      line2: "Deliver Projects\nBetter.",
+    },
+    lead: "Manage site records, automate reports, and gain real-time visibility across your projects - all in one platform.",
+    visualEyebrow: "Operational Visibility",
+    visualTitle: "Structured records, cleaner reporting",
+    featureHighlights: [
+      "Standardise Workflows",
+      "Automate Reporting",
+      "Better Visibility Across Projects",
+      "Audit-Ready Records",
+    ],
+    primaryCta: "Talk to us about your workflow",
+    secondaryCta: "How It Works",
+    trustLine:
+      "Built for contractors and project teams modernising construction operations in Malaysia.",
+    metrics: [
+      {
+        value: "1",
+        title: "Connected Workflow Hub",
+        label: "Site Records, Payment Documents, Reports.",
+      },
+      {
+        value: "3",
+        title: "Operational gains",
+        label: "Capture Data, Reuse Data, Improve Visibility.",
+      },
+      {
+        value: "24/7",
+        title: "Live visibility",
+        label: "Real-time data across projects. Anytime, anywhere.",
+      },
+    ],
   },
-  pains: {
+  familiar: {
     eyebrow: "Still managing in old fashion?",
     title: "If this looks familiar, reporting risk is already compounding.",
     lead: "Small delays in field reporting quickly become costly blind spots for management decisions.",
     items: [
       {
         tag: "Track 1 · Data Fragmentation",
-        title: "Site records spread across multiple tools and departments",
+        title: "Site records spread across multiple Tools and Departments?",
         detail:
           "Daily updates live in disconnected channels, which makes audit trails weak and handovers inconsistent.",
-        impact: "Leads to reporting blind spots"
+        impact: "Leads to reporting blind spots",
       },
       {
         tag: "Track 2 · Reporting Delay",
-        title: "Reports compiled manually every month",
+        title: "Reports compiled manually every month?",
         detail:
           "Your team spends end-of-month cycles stitching files instead of improving site execution and controls.",
-        impact: "Creates recurring reporting backlog"
+        impact: "Creates recurring reporting backlog",
       },
       {
         tag: "Track 3 · Decision Risk",
-        title: "Decisions made using outdated information",
+        title: "Decisions made using outdated information?",
         detail:
           "Management decisions rely on stale summaries, so risks are often visible only after cost and schedule impact.",
-        impact: "Delays intervention on critical issues"
-      }
-    ]
-  },
-  capabilities: {
-    eyebrow: "What your teams can do with Manageable",
-    title: "Simple execution flow for construction teams that need clarity now.",
-    featurePositionAriaLabel: "Feature position",
-    railAriaLabel: "Manageable platform features",
-    features: [
-      {
-        eyebrow: "Data Capture",
-        title: "Capture site data once in one guided flow.",
-        description:
-          "Customized field entries keep daily logs, QA records, and approvals clean before they move downstream.",
-        support: "A guided form flow reduces missing details and gives teams one place to start every record.",
-        iconLabel: "Data capture"
+        impact: "Delays intervention on critical issues",
       },
-      {
-        eyebrow: "Auto-generated reports",
-        title: "Turn field activity into reports without the month-end scramble.",
-        description:
-          "The same records can feed daily site reports and progress claim summaries without rebuilding the data manually.",
-        support: "Teams enter once, and management gets structured outputs that are easier to review and share.",
-        iconLabel: "Reports"
-      },
-      {
-        eyebrow: "Cross-project tracking",
-        title: "Track momentum across projects from a single view.",
-        description:
-          "Heatmaps, activity streams, and workflow visibility make it easier to spot bottlenecks before they spread.",
-        support: "Project leads can see what is moving, what is stalled, and where follow-up is needed next.",
-        iconLabel: "Projects"
-      },
-      {
-        eyebrow: "Management visibility",
-        title: "Give decision-makers a clearer real-time operating picture.",
-        description:
-          "Financial status, expenditure curves, and quotation views help leadership review progress with less guesswork.",
-        support: "The dashboard layer turns site updates into a management view that is easier to act on quickly.",
-        iconLabel: "Dashboards"
-      },
-      {
-        eyebrow: "Fully customized forms",
-        title: "Tailor every form and workflow to the way your team already works.",
-        description:
-          "Adjust statuses, transitions, and field structures so each document reflects your real approval flow and site process.",
-        support:
-          "You are not locked into one template. Forms can evolve with the way your projects and departments operate.",
-        iconLabel: "Customization"
-      }
-    ]
-  },
-  workflowCarousel: {
-    containerAriaLabel: "Manageable workflow preview",
-    kicker: "Document Preview",
-    controlsAriaLabel: "Preview navigation",
-    previousAriaLabel: "Previous preview",
-    nextAriaLabel: "Next preview",
-    workflowSlides: [
-      {
-        title: "Create document in one guided flow",
-        description: "Customized form inputs keep daily site data complete before it reaches management."
-      },
-      {
-        title: "Review structured records instantly",
-        description: "Field entries become readable site diary records with cleaner handover and QA visibility."
-      }
     ],
-    projectSlides: [
-      {
-        title: "See project movement across the year",
-        description: "Timeline, heatmap, and recent activity keep multiple sites visible in one glance."
-      },
-      {
-        title: "Track workflow approvals and reversions",
-        description: "Status actions and log history make process bottlenecks obvious before they snowball."
-      },
-      {
-        title: "Map execution flows clearly",
-        description: "Visual workflow mapping shows where records move, stall, or complete across teams."
-      }
-    ]
   },
-  automatedReports: {
-    containerAriaLabel: "Automated report preview",
-    tabsAriaLabel: "Generated report types",
-    controlsAriaLabel: "Report navigation",
-    previousAriaLabel: "Previous report",
-    nextAriaLabel: "Next report",
-    insightLabel: "Auto-Generated",
-    insightText:
-      "Site teams capture once, and Manageable structures the output into operational and financial report formats.",
-    slides: [
+  howItWorks: {
+    eyebrow: "How Manageable works",
+    title:
+      "A structured workflow from field activity to management reporting.",
+    lead: "We start by understanding your documentation needs, build the right workflows, and turn field activity into structured data.",
+    steps: [
       {
-        tab: "Daily Site Report",
-        title: "Laporan Harian Tapak Bina",
-        subtitle: "Structured from daily site diary records"
+        id: "01",
+        title: "Assess your documentation",
+        detail:
+          "We review your existing documents, reports, approvals, and compliance requirements to understand what your project truly needs.",
+        points: ["Site Diary", "Inspections", "Approvals", "Claims"],
       },
       {
-        tab: "Monthly Claim",
-        title: "Summary of Monthly Progress Claim",
-        subtitle: "Compiled from progress and certified amounts"
-      }
-    ]
-  },
-  managementDashboard: {
-    containerAriaLabel: "Management dashboard preview",
-    tabsAriaLabel: "Dashboard sections",
-    controlsAriaLabel: "Dashboard navigation",
-    previousAriaLabel: "Previous dashboard",
-    nextAriaLabel: "Next dashboard",
-    slides: [
-      {
-        tab: "Financial Status",
-        title: "Financial Status",
-        subtitle: "as at Feb 2026"
+        id: "02",
+        title: "Design your workflows",
+        detail:
+          "We map the process behind each document and configure workflow statuses, rules, and approval paths that match your operation.",
+        points: ["Draft", "Submitted", "Under Review", "Approved", "Closed"],
       },
       {
-        tab: "Expenditure Curve",
-        title: "Expenditure Curve",
-        subtitle: "monthly bars + cumulative line"
+        id: "03",
+        title: "Build digital forms that fit your process",
+        detail:
+          "We create digital forms using customizable fields so the records capture what your site teams already need to report.",
+        points: ["Text", "Photo", "Date", "Signature"],
       },
       {
-        tab: "Quotation",
-        title: "CE Quotation Status",
-        subtitle: "pie + table preview"
-      }
-    ]
-  },
-  customizedForms: {
-    containerAriaLabel: "Customized forms preview",
-    kicker: "Form Builder",
-    controlsAriaLabel: "Form builder navigation",
-    previousAriaLabel: "Previous form builder preview",
-    nextAriaLabel: "Next form builder preview",
-    statusPreviewAriaLabel: "Workflow status customization preview",
-    fieldsPreviewAriaLabel: "Document field customization preview",
-    statusPreviewAlt: "Workflow status editor showing customizable document statuses and transitions",
-    fieldsPreviewAlt: "Workflow form editor showing customizable document fields and settings",
-    slides: [
-      {
-        title: "Customize statuses for every workflow step",
-        description: "Define the document states, actions, and handoff logic that match your real operating process."
+        id: "04",
+        title: "Use on site. Every day.",
+        detail:
+          "Your team enters records in just a few taps. Information moves through the workflow and gets surfaced to the right approvers.",
+        points: ["Quick to enter", "Track every step", "Notify the right people"],
       },
       {
-        title: "Edit any document field without rebuilding the system",
-        description:
-          "Add, rename, reorder, or remove fields so each form fits the exact data your team needs to capture."
-      }
-    ]
-  },
-  authority: {
-    eyebrow: "Why Manageable",
-    pill: "Software + Service Execution",
-    title: "We do not just sell software. We help run the digitization with you.",
-    lead:
-      "Manageable combines platform + execution support so your team gets adoption, working workflows, and measurable operational improvements faster.",
-    cards: [
-      {
-        title: "Software + Service Team",
-        detail: "Hands-on support labour to implement, configure, and stabilize reporting operations end-to-end."
+        id: "05",
+        title: "Generate reports. Reuse data.",
+        detail:
+          "Turn completed records into reports, dashboards, and claims so the same information keeps working for your projects.",
+        points: ["Reports", "Dashboards", "Claims", "Exports"],
       },
-      {
-        title: "Customised to Your Operations",
-        detail: "We tailor workflows to your current project execution model, not a generic template."
-      },
-      {
-        title: "Founders Program Bargain",
-        detail: "Early partners get founder-stage pricing with high-value rollout scope while slots remain open."
-      },
-      {
-        title: "Digitize and Operate Continuously",
-        detail: "We keep improving your digital operations after go-live so the system keeps compounding value."
-      }
     ],
-    offer: "Founders Program: limited onboarding slots with priority support."
   },
-  cta: {
-    title: "More than a tool, take control of your construction data.",
-    subtitle: "Ready to run reporting with less friction?",
-    lead: "Book an appointment or send us an email for a demo.",
-    messagePrompt: "What do you want to digitize first?",
+  workflows: {
+    eyebrow: "Construction workflow examples",
+    title: "Use cases shaped around how project teams actually operate.",
+    lead: "Manageable is meant to support operational workflows that construction teams already recognize, then progressively improve them.",
+    examples: [
+      {
+        title: "Daily site records and progress updates",
+        summary:
+          "Create a more dependable trail of daily activity without rebuilding the same report every cycle.",
+        points: [
+          "Guide teams through required fields",
+          "Keep updates easier to review and hand over",
+          "Reduce reporting clean-up later",
+        ],
+      },
+      {
+        title: "Approvals, submissions, and workflow control",
+        summary:
+          "Make document movement clearer so teams know what is pending, returned, approved, or stalled.",
+        points: [
+          "Reflect real approval states",
+          "Create a cleaner audit trail",
+          "Improve follow-up discipline",
+        ],
+      },
+      {
+        title: "Management-level status consolidation",
+        summary:
+          "Bring operational records closer to the dashboards and summaries leadership actually needs.",
+        points: [
+          "Support multi-project visibility",
+          "Reduce lag between site and management",
+          "Prepare for better financial and progress reporting",
+        ],
+      },
+    ],
+  },
+  assessment: {
+    eyebrow: "Documentation load assessment",
+    title: "A clearer way to quantify the hidden cost of manual reporting.",
+    lead: "This calculator helps construction teams estimate the time and cost of manual documentation and shows what becomes possible when workflows are digitised.",
+    calculatorTitle: "Assessment input",
+    calculatorLead:
+      "Start with a simple picture of how much manual reporting your current projects require each day.",
+    calculatorCtaTitle: "Calculate",
+    calculatorCtaDetail: "See your results",
+    calculatorCtaIdleDetail: "Enter all values to calculate",
+    aboutTitle: "About this calculator",
+    aboutDetail:
+      "Estimates are based on typical construction workflows and industry benchmarks. Actual results may vary based on project complexity and reporting requirements.",
+    metrics: [
+      {
+        label: "Projects",
+        placeholder: "Number of projects",
+        note: "Active projects being reported manually",
+      },
+      {
+        label: "Staff involved",
+        placeholder: "Number of staff involved",
+        note: "Supervisors, coordinators, and management support",
+      },
+      {
+        label: "Hours per day",
+        placeholder: "Hours spent per staff per day",
+        note: "Average daily documentation time spent by each involved staff member",
+      },
+    ],
+    impactEyebrow: "Your estimated documentation impact",
+    impactTitle: "Here's what we found",
+    impactDetail:
+      "Your team could be spending significant time and money on manual documentation.",
+    impactPromptDetail:
+      "Enter your current reporting numbers and click calculate to see the estimated time and cost impact.",
+    results: [
+      {
+        label: "Estimated monthly admin hours",
+        detail: "Time lost to manual reporting and paper work",
+      },
+      {
+        label: "Estimated monthly labour cost",
+        detail: "Direct cost of time spent on manual documentation",
+      },
+      {
+        label: "Estimated annual labour cost",
+        detail: "The true cost of manual reporting over 12 months",
+      },
+      {
+        label: "Potential reporting friction reduced",
+        detail: "High impact opportunities to streamline workflows",
+      },
+    ],
+    gapTitle: "And despite that spend, you still may not have:",
+    gapPromptTitle: "What manual reporting still does not give you",
+    gapItems: [
+      {
+        title: "Structured digital workflows",
+        detail: "Consistent process steps, accountability, and cleaner execution across projects.",
+      },
+      {
+        title: "Automated reports",
+        detail: "Faster reporting outputs without chasing files, reformatting updates, or rebuilding summaries.",
+      },
+      {
+        title: "Reusable operational data",
+        detail: "Data captured once and reused for dashboards, claims support, compliance, and management visibility.",
+      },
+    ],
+    meaningLabel: "What this means:",
+    meaningText:
+      "These are people and dollars that could be redirected back to project delivery, quality, safety, and your bottom line.",
+    meaningPromptText:
+      "Your estimate will show how much time and labour could be redirected back to project delivery, quality, safety, and your bottom line.",
+    formTitle: "Get your free workflow assessment",
+    formLead:
+      "Want to see how these numbers compare to your actual projects? Our team will prepare a personalised workflow assessment with practical recommendations.",
+    formButton: "Send me my free assessment",
+    formSuccessButton: "Details sent !",
+    formPrivacy: "Your information is safe with us. We respect your privacy.",
+    formDisclaimer:
+      "No obligation. Just valuable insights for your projects.",
+    formSending: "Sending...",
+    formSuccess: "Your workflow assessment request has been sent.",
+    formError: "There was a problem sending your assessment request. Please try again.",
+    formRequiredField: "Please enter both email and phone number.",
+    formInvalidEmail: "Please enter a valid email address.",
+    formFields: {
+      fullName: "Full name",
+      company: "Company",
+      email: "Email",
+      phone: "Phone / WhatsApp",
+    },
+  },
+  experience: {
+    eyebrow: "Experience behind Manageable",
+    title:
+      "Built with respect for the realities of construction administration.",
+    lead: "Manageable is positioned as more than a software surface. The product direction is grounded in the day-to-day pressure of getting site records, approvals, and management outputs under control.",
+    evidence: [
+      {
+        value: "Ops-first",
+        label: "design principle",
+        detail:
+          "The workflow starts with operational discipline, not abstract product jargon.",
+      },
+      {
+        value: "Configurable",
+        label: "for project reality",
+        detail:
+          "Forms and workflow structures can reflect how your teams already operate.",
+      },
+      {
+        value: "Adoption-aware",
+        label: "rollout mindset",
+        detail:
+          "The long-term goal is usable digitization that site teams can actually maintain.",
+      },
+    ],
+  },
+  pilot: {
+    eyebrow: "How to begin",
+    title:
+      "Digitise One Workflow at a Time.",
+    highlight: "Transform with Confidence.",
+    lead: "Manageable works alongside your existing operations, helping you digitise workflows progressively while your projects and teams continue to run as usual.",
+    points: [
+      {
+        title: "Select one workflow family",
+        detail:
+          "Begin with a documentation process that is painful enough to matter but contained enough to stabilize.",
+      },
+      {
+        title: "Define success in operational terms",
+        detail:
+          "Measure reduction in manual compilation, better visibility, and cleaner handover quality.",
+      },
+      {
+        title: "Scale after proving fit",
+        detail:
+          "Once the team rhythm works, extend the model into additional workflows and reporting layers.",
+      },
+    ],
+    note: {
+      eyebrow: "Good to know",
+      title: "Progress Over Perfection Always Wins.",
+      detail:
+        "Digital transformation does not succeed by doing everything at once. It succeeds by making meaningful progress, step by step.",
+      accent: "Start small. Learn quickly. Improve continuously.",
+      cta: "Start With One Workflow",
+    },
+    checklist: [
+      {
+        title: "No disruption to ongoing projects",
+        detail: "Your teams can keep working the way they do today.",
+      },
+      {
+        title: "No massive retraining exercise",
+        detail: "Familiar processes. Easy adoption. Real usage.",
+      },
+      {
+        title: "No big bang implementation",
+        detail: "We introduce new workflows gradually and safely.",
+      },
+      {
+        title: "Value can be demonstrated quickly",
+        detail: "Show impact early and build confidence across teams.",
+      },
+      {
+        title: "Expand only when you are ready",
+        detail: "You stay in control of the pace and priorities.",
+      },
+    ],
+  },
+  vision: {
+    eyebrow: "Long-term vision",
+    title: "From better documents to a better operating model.",
+    lead: "The long-term ambition is not simply faster paperwork. It is a construction operating environment where information is captured once, trusted more, and reused across execution, reporting, and management control.",
+    points: [
+      {
+        title: "Operational memory",
+        detail:
+          "Project information becomes easier to trace, review, and learn from over time.",
+      },
+      {
+        title: "Management visibility",
+        detail:
+          "Leadership gets a more reliable pulse on site reality without waiting for heavy manual summaries.",
+      },
+      {
+        title: "Progressive digitization",
+        detail:
+          "Teams can expand from one stabilized workflow into a broader digital operating stack.",
+      },
+    ],
+  },
+  contactSection: {
+    eyebrow: "Contact / Demo",
+    title:
+      "If this resonates with your business, let’s talk workflows.",
+    lead: "We can start with your current documentation burden, where the reporting friction is, and which workflow is most suitable for a pilot.",
+    points: [
+      {
+        title: "Focused on your reality",
+        detail: "We start with your current challenges and priorities.",
+      },
+      {
+        title: "Practical recommendations",
+        detail: "You’ll get clear next steps you can act on.",
+      },
+      {
+        title: "No commitment",
+        detail: "A conversation, not a sales pitch.",
+      },
+    ],
+    form: {
+      company: "Company",
+      companyPlaceholder: "e.g. ABC Construction Sdn Bhd",
+      email: "Work email",
+      emailPlaceholder: "e.g. john@company.com",
+      phone: "Phone number",
+      phonePlaceholder: "e.g. 012-345 6789",
+      message: "Message (optional)",
+      messagePlaceholder: "Tell us a bit about your projects or challenges...",
+      privacy: "Your information is safe with us. We respect your privacy.",
+      button: "Send my details",
+      sending: "Sending...",
+      success: "Details sent!",
+      error: "Something went wrong while sending your details. Please try again.",
+      requiredField: "Please fill in this field.",
+      invalidEmail: "Please enter a valid work email.",
+    },
     disclaimer:
-      "By contacting us, you agree that we may use your details to respond to your enquiry and arrange a demo."
+      "By submitting, you agree that we may contact you to respond to your enquiry and arrange a demo.",
   },
   footer: {
-    lead: "Manageable helps construction teams structure site data and automate reporting workflows.",
-    rights: "All rights reserved."
+    lead: "Manageable is being shaped for construction teams that want more structure, less reporting friction, and stronger operating visibility.",
+    rights: "All rights reserved.",
   },
   privacyModal: {
     title: "Privacy Policy",
-    lead: "Please review how we handle your contact details before booking a demo or sending us a message."
+    lead: "Please review how we handle your contact details before contacting us or requesting a demo.",
   },
   privacyPolicy: {
     eyebrow: "Legal",
     title: "Privacy Policy",
     updatedLabel: "Last updated:",
-    lead:
-      "This Privacy Policy explains how DTB DATABYTES SOFTWARE SERVICES, the company behind Manageable, collects, uses, and protects personal information submitted through this website.",
+    lead: "This Privacy Policy explains how DTB DATABYTES SOFTWARE SERVICES, the company behind Manageable, collects, uses, and protects personal information submitted through this website.",
     sections: [
       {
         title: "1. Information we collect",
-        intro: "When you contact us or book a demo, we may collect:",
+        intro: "When you contact us or request a demo, we may collect:",
         items: [
-          "Your name",
           "Your work email address",
           "Your company name",
+          "Your phone number",
           "The message or project details you submit",
-          "Any information you choose to share through email, WhatsApp, or calendar booking"
-        ]
+          "Any information you choose to share through email, WhatsApp, or future booking tools",
+        ],
       },
       {
         title: "2. How we use your information",
@@ -426,326 +694,490 @@ const en: Dictionary = {
           "Schedule and provide demos",
           "Understand your operational needs and evaluate fit for our services",
           "Follow up on requested information about Manageable and related services from DTB DATABYTES SOFTWARE SERVICES",
-          "Improve our website and business communications"
-        ]
+          "Improve our website and business communications",
+        ],
       },
       {
         title: "3. Third-party services",
         intro:
-          "This website may use third-party services such as Zoho Calendar booking links, email providers, and WhatsApp to help us communicate with you. When you use those services, your information may also be processed according to their privacy practices."
+          "This website may use third-party services such as email providers, WhatsApp, and future booking or analytics tools to help us communicate with you. When you use those services, your information may also be processed according to their privacy practices.",
       },
       {
         title: "4. Data sharing",
         intro:
-          "We do not sell your personal information. We may share information with service providers only when needed to operate our website, manage communications, or support demo scheduling."
+          "We do not sell your personal information. We may share information with service providers only when needed to operate our website, manage communications, or support demo scheduling.",
       },
       {
         title: "5. Data retention",
         intro:
-          "We keep enquiry and demo-related information for as long as reasonably necessary to respond to you, maintain business records, and support ongoing discussions, unless a longer retention period is required by law."
+          "We keep enquiry and demo-related information for as long as reasonably necessary to respond to you, maintain business records, and support ongoing discussions, unless a longer retention period is required by law.",
       },
       {
         title: "6. Your choices",
         intro:
-          "You may request access to, correction of, or deletion of the personal information you have shared with us, subject to any legal or operational obligations we may have to retain certain records."
+          "You may request access to, correction of, or deletion of the personal information you have shared with us, subject to any legal or operational obligations we may have to retain certain records.",
       },
       {
         title: "7. Contact",
         intro:
           "For privacy-related questions or requests regarding DTB DATABYTES SOFTWARE SERVICES or Manageable, contact us at",
-        isContact: true
+        isContact: true,
       },
       {
         title: "8. Changes to this policy",
         intro:
-          "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date."
-      }
-    ]
-  }
+          "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.",
+      },
+    ],
+  },
 };
 
 const zhCN: Dictionary = {
   metadata: {
-    homeTitle: "Manageable | 施工数据结构化，管理报告自动化",
-    homeDescription: "Manageable 帮助建筑团队一次录入现场数据，并自动生成可用于决策的管理报告。",
+    homeTitle: "Manageable | 马来西亚建筑工程流程与现场文件管理软件",
+    homeDescription:
+      "Manageable 帮助建筑团队把分散的现场资料变成结构化流程，减轻报告负担，并提升管理可视度。",
     privacyTitle: "隐私政策",
-    privacyDescription: "适用于 DTB DATABYTES SOFTWARE SERVICES 与 Manageable 网站咨询、演示预约及沟通的隐私政策。"
+    privacyDescription:
+      "适用于 DTB DATABYTES SOFTWARE SERVICES 与 Manageable 网站咨询、演示申请及沟通的隐私政策。",
   },
   ui: {
     homeAriaLabel: "Manageable 首页",
     login: "登录",
-    joinNow: "立即加入",
-    bookDemo: "预约演示",
-    explorePlatform: "了解平台",
+    bookDemo: "申请演示",
+    explorePlatform: "了解流程",
     privacyPolicy: "隐私政策",
-    contact: "联系我们",
+    contact: "联系",
     continue: "继续",
     closePrivacyPolicy: "关闭隐私政策",
     beforeContinue: "继续之前",
-    bookDemoCard: "预约演示",
-    appointmentCalendar: "预约日历",
-    bookDemoCalendarAria: "预约日历",
-    formName: "姓名",
-    formEmail: "工作邮箱",
-    formCompany: "公司",
-    sendEmail: "发送邮件",
-    contactUsAt: "或者，通过以下方式联系我们：",
-    backToHome: "返回首页"
+    contactUsAt: "直接联系",
+    backToHome: "返回首页",
+    viewPilot: "查看试点方案",
+    viewAssessment: "预览评估",
   },
+  nav: [
+    { href: "#familiar", label: "常见痛点" },
+    { href: "#how-it-works", label: "运作方式" },
+    { href: "#assessment", label: "负担评估" },
+    { href: "#contact-demo", label: "联系我们" },
+  ],
   hero: {
-    line1: "从现场记录",
-    line2: "到管理报告",
-    line3: "全程自动化。",
-    lead: "为 G7 总承包商、开发商以及管理复杂工地的项目团队而打造。"
+    eyebrow: "建筑运营基础设施",
+    title: {
+      line1: "建筑流程数字化。",
+      line2: "让项目管理更有条理。",
+    },
+    lead: "统一现场记录、自动生成报告，并在同一平台上为项目带来实时可视度。",
+    visualEyebrow: "项目一目了然",
+    visualTitle: "记录有依据，报告更清晰",
+    featureHighlights: [
+      "标准化工作流程",
+      "节省报告时间",
+      "提升决策可视度",
+      "更完整的审计记录",
+    ],
+    primaryCta: "和我们聊聊您的流程",
+    secondaryCta: "如何运作",
+    trustLine: "为正在推进建筑运营数字化的总包商与项目团队而打造。",
+    metrics: [
+      {
+        value: "1",
+        title: "统一连接",
+        label: "现场记录、付款文件、报告互相关联。",
+      },
+      {
+        value: "3",
+        title: "运营提升",
+        label: "采集数据、复用数据、提升可视度。",
+      },
+      {
+        value: "24/7",
+        title: "实时可视度",
+        label: "跨项目实时数据，随时随地可查看。",
+      },
+    ],
   },
-  pains: {
-    eyebrow: "还在用传统方式管理？",
-    title: "这些情况熟悉吗？风险已在累积。",
-    lead: "现场汇报的每一个小延迟，都会很快变成管理决策上的高成本盲区。",
+  familiar: {
+    eyebrow: "还在用老方式管理项目？",
+    title: "如果这些情况经常发生,项目风险可能早已悄悄累积",
+    lead: "资料分散、报告延迟、信息滞后，风险也在悄悄累积。",
     items: [
       {
-        tag: "问题 1 · 数据分散",
-        title: "现场记录分散在多个工具和部门之间",
-        detail: "日常更新散落在不同渠道中，导致审计轨迹薄弱、交接也不一致。",
-        impact: "造成报告盲点"
+        tag: "Track 1 · 资料分散",
+        title: "现场资料分散，难以追踪？",
+        detail:
+          "WhatsApp、Excel、云端文件各自独立，资料难以统一管理，查找与交接效率不断下降。",
+        impact: "❌ 容易出现资料遗漏与版本混乱",
       },
       {
-        tag: "问题 2 · 报告延迟",
-        title: "每月仍靠人工整理报告",
-        detail: "团队在月末花大量时间拼接文件，而不是优化现场执行和管控。",
-        impact: "形成持续性的报告积压"
+        tag: "Track 2 · 报告延迟",
+        title: "报告整理占用了太多时间？",
+        detail: "团队把大量时间花在整理资料与制作报告，而不是推进现场工作与项目管理。",
+        impact: "❌ 报告积压，影响决策效率",
       },
       {
-        tag: "问题 3 · 决策风险",
-        title: "管理层依据过时信息做决策",
-        detail: "管理决策依赖滞后的汇总数据，风险往往要在成本和工期受影响后才被看到。",
-        impact: "延误关键问题介入"
-      }
-    ]
-  },
-  capabilities: {
-    eyebrow: "Manageable 能为团队做到什么",
-    title: "给建筑团队更清晰的执行流程。",
-    featurePositionAriaLabel: "功能位置",
-    railAriaLabel: "Manageable 平台功能",
-    features: [
-      {
-        eyebrow: "数据采集",
-        title: "通过一条引导式流程，一次完成现场数据录入。",
-        description: "可自定义字段让每日记录、QA 记录和审批在进入下游前保持整洁一致。",
-        support: "引导式表单可减少遗漏，并为团队提供统一的记录入口。",
-        iconLabel: "数据采集"
+        tag: "Track 3 · 决策风险",
+        title: "问题总是在事后才被发现？",
+        detail:
+          "当关键数据无法及时汇总时，风险往往已经扩大，管理团队难以及早介入处理。",
+        impact: "❌ 错过关键问题的处理时机",
       },
-      {
-        eyebrow: "自动生成报告",
-        title: "把现场活动直接转成报告，不再月末临时赶工。",
-        description: "同一份记录可直接生成每日日报和进度索赔摘要，无需重复手动整理数据。",
-        support: "团队录入一次，管理层就能拿到更易审核和共享的结构化输出。",
-        iconLabel: "报告"
-      },
-      {
-        eyebrow: "跨项目追踪",
-        title: "在单一视图中掌握多个项目的推进节奏。",
-        description: "热力图、活动流和流程可视化，让团队更早发现瓶颈，避免问题扩散。",
-        support: "项目负责人可以快速看见哪里在推进、哪里停滞，以及下一步该跟进哪里。",
-        iconLabel: "项目"
-      },
-      {
-        eyebrow: "管理可视化",
-        title: "让决策者获得更清晰的实时运营全貌。",
-        description: "财务状态、支出曲线和报价视图，帮助管理层以更少猜测来审视项目进度。",
-        support: "仪表盘把现场更新转成管理层更容易快速采取行动的视图。",
-        iconLabel: "仪表盘"
-      },
-      {
-        eyebrow: "完全可定制表单",
-        title: "让每张表单和流程都贴合你团队原本的工作方式。",
-        description: "可调整状态、流转和字段结构，让每份文档都真实反映你的审批流程与现场作业。",
-        support: "你不会被锁定在单一模板中，表单可随着项目和部门运作方式持续演进。",
-        iconLabel: "自定义"
-      }
-    ]
-  },
-  workflowCarousel: {
-    containerAriaLabel: "Manageable 工作流预览",
-    kicker: "文档预览",
-    controlsAriaLabel: "预览导航",
-    previousAriaLabel: "上一项预览",
-    nextAriaLabel: "下一项预览",
-    workflowSlides: [
-      {
-        title: "通过引导式流程创建文档",
-        description: "自定义表单输入让每日现场数据在传递给管理层前保持完整。"
-      },
-      {
-        title: "即时查看结构化记录",
-        description: "现场录入会变成更易阅读的施工日记记录，交接和 QA 可视性也更清晰。"
-      }
     ],
-    projectSlides: [
-      {
-        title: "全年查看项目动态",
-        description: "时间轴、热力图和近期活动让多个工地的变化一目了然。"
-      },
-      {
-        title: "追踪审批与回退流程",
-        description: "状态动作与日志历史让流程瓶颈在扩大之前就能被发现。"
-      },
-      {
-        title: "清楚映射执行流程",
-        description: "可视化工作流展示记录如何在团队间流转、停滞或完成。"
-      }
-    ]
   },
-  automatedReports: {
-    containerAriaLabel: "自动报告预览",
-    tabsAriaLabel: "生成的报告类型",
-    controlsAriaLabel: "报告导航",
-    previousAriaLabel: "上一份报告",
-    nextAriaLabel: "下一份报告",
-    insightLabel: "自动生成",
-    insightText: "现场团队只需录入一次，Manageable 就能把输出整理成运营与财务报告格式。",
-    slides: [
+  howItWorks: {
+    eyebrow: "Manageable 如何运作",
+    title: "从现场记录到管理报告，让每一份资料都有价值。",
+    lead: "不改变您的工作习惯，而是让流程更清晰、更容易管理。",
+    steps: [
       {
-        tab: "每日日报",
-        title: "Laporan Harian Tapak Bina",
-        subtitle: "根据每日日记式现场记录自动结构化生成"
+        id: "01",
+        title: "了解您目前的文件与流程",
+        detail:
+          "先了解团队目前的记录方式、审批流程与文件需求。",
+        points: ["施工日志", "检查表", "审批", "索赔"],
       },
       {
-        tab: "月度索赔",
-        title: "Summary of Monthly Progress Claim",
-        subtitle: "根据进度和已认证金额汇总生成"
-      }
-    ]
-  },
-  managementDashboard: {
-    containerAriaLabel: "管理仪表盘预览",
-    tabsAriaLabel: "仪表盘分区",
-    controlsAriaLabel: "仪表盘导航",
-    previousAriaLabel: "上一个仪表盘",
-    nextAriaLabel: "下一个仪表盘",
-    slides: [
-      {
-        tab: "财务状态",
-        title: "财务状态",
-        subtitle: "截至 2026 年 2 月"
+        id: "02",
+        title: "设计符合团队习惯的工作流",
+        detail:
+          "根据现有作业方式，配置状态、审批流程与负责人。",
+        points: ["草稿", "已提交", "审核中", "已批准", "已关闭"],
       },
       {
-        tab: "支出曲线",
-        title: "支出曲线",
-        subtitle: "月度柱状图 + 累积曲线"
+        id: "03",
+        title: "建立符合现场需求的数字表单",
+        detail: "根据实际需求设计表单，让记录更简单、更统一。",
+        points: ["文字", "照片", "日期", "签名"],
       },
       {
-        tab: "报价",
-        title: "CE 报价状态",
-        subtitle: "饼图 + 表格预览"
-      }
-    ]
-  },
-  customizedForms: {
-    containerAriaLabel: "自定义表单预览",
-    kicker: "表单构建器",
-    controlsAriaLabel: "表单构建器导航",
-    previousAriaLabel: "上一个表单构建器预览",
-    nextAriaLabel: "下一个表单构建器预览",
-    statusPreviewAriaLabel: "工作流状态自定义预览",
-    fieldsPreviewAriaLabel: "文档字段自定义预览",
-    statusPreviewAlt: "展示可自定义文档状态和流转的工作流状态编辑器",
-    fieldsPreviewAlt: "展示可自定义文档字段与设置的工作流表单编辑器",
-    slides: [
-      {
-        title: "为每个流程步骤自定义状态",
-        description: "定义与真实运营流程一致的文档状态、动作和交接逻辑。"
+        id: "04",
+        title: "在现场正式使用",
+        detail: "现场填写一次，数据自动流转到相关负责人。",
+        points: ["录入更快", "每一步可追踪", "通知相关人员"],
       },
       {
-        title: "无需重建系统即可编辑任意文档字段",
-        description: "新增、重命名、排序或移除字段，让每张表单都贴合团队真正需要采集的数据。"
-      }
-    ]
-  },
-  authority: {
-    eyebrow: "为什么选择 Manageable",
-    pill: "软件 + 落地执行服务",
-    title: "我们不只是卖软件，也会和你一起把数字化真正跑起来。",
-    lead: "Manageable 将平台与执行支持结合，让团队更快实现采用、跑通流程，并看到可衡量的运营改善。",
-    cards: [
-      {
-        title: "软件 + 服务团队",
-        detail: "提供亲手落地的支持，帮助实施、配置并稳定端到端的报告运营流程。"
+        id: "05",
+        title: "一次记录，多次利用",
+        detail: "同一份数据可用于报告、仪表板、审批记录与项目分析。",
+        points: ["报告", "仪表板", "索赔", "导出"],
       },
-      {
-        title: "按你的运营模式定制",
-        detail: "我们会根据你现有的项目执行模式来定制流程，而不是套用通用模板。"
-      },
-      {
-        title: "创始合作计划优惠",
-        detail: "早期合作伙伴可在名额开放期间获得创始阶段价格和更高价值的落地范围。"
-      },
-      {
-        title: "持续数字化，持续运营",
-        detail: "系统上线后我们也会持续优化你的数字化运营，让价值不断累积。"
-      }
     ],
-    offer: "创始合作计划：限量 onboarding 名额，享有优先支持。"
   },
-  cta: {
-    title: "不只是一个工具，而是帮你真正掌控施工数据。",
-    subtitle: "准备好用更少阻力跑好报告流程了吗？",
-    lead: "预约时间，或直接发邮件联系我们了解演示。",
-    messagePrompt: "你最想先数字化什么流程？",
-    disclaimer: "当你联系我们时，即表示你同意我们使用你的资料来回复咨询并安排演示。"
+  workflows: {
+    eyebrow: "建筑流程示例",
+    title: "围绕项目团队真实运作方式来设计的应用场景。",
+    lead: "Manageable 的目标，是先支持建筑团队熟悉的运营流程，再逐步把这些流程做得更稳定、更高效。",
+    examples: [
+      {
+        title: "现场日报与进度更新",
+        summary:
+          "建立更可靠的日常活动记录轨迹，减少每个周期重新整理报告的压力。",
+        points: [
+          "引导团队填写必要字段",
+          "让更新更容易审阅和交接",
+          "减少后续报告整理工作",
+        ],
+      },
+      {
+        title: "审批、提交流程与状态管控",
+        summary: "让文件流转更清楚，团队知道哪些待处理、退回、批准或卡住。",
+        points: [
+          "贴合真实审批状态",
+          "形成更清晰的审计轨迹",
+          "提升跟进行动纪律",
+        ],
+      },
+      {
+        title: "管理层状态汇总",
+        summary: "把运营记录更有效地连接到管理层真正需要的仪表板与汇总视图。",
+        points: [
+          "支持多项目可视度",
+          "缩短现场与管理层之间的时间差",
+          "为财务与进度报告打好基础",
+        ],
+      },
+    ],
+  },
+  assessment: {
+    eyebrow: "文档负担评估",
+    title: "您花在整理资料上的时间，可能比想象中更多",
+    lead: "用简单的数据，估算团队每年花在资料整理上的时间与成本。",
+    calculatorTitle: "评估输入",
+    calculatorLead: "先从一个简单的现况开始，看看目前项目每天需要多少人工报告工作。",
+    calculatorCtaTitle: "开始计算",
+    calculatorCtaDetail: "查看结果",
+    calculatorCtaIdleDetail: "请先填入所有数值",
+    aboutTitle: "关于这个计算器",
+    aboutDetail:
+      "这些估算基于典型施工流程与行业经验值。实际结果会因项目复杂度与汇报要求而有所不同。",
+    metrics: [
+      { label: "项目数量", placeholder: "项目数量", note: "目前依靠人工报告的活跃项目" },
+      { label: "参与人员", placeholder: "参与人数", note: "包括主管、协调员和管理支援人员" },
+      {
+        label: "每日耗时",
+        placeholder: "每人每日耗时小时数",
+        note: "每位参与人员平均每天用于记录、追踪与整理资料的时间",
+      },
+    ],
+    impactEyebrow: "您的文档工作影响估算",
+    impactTitle: "根据您的输入估算",
+    impactDetail: "您的团队每年可能投入大量时间处理记录、整理资料与制作报告。",
+    impactPromptDetail: "输入目前的项目数字并点击计算后，就能看到估算出来的时间与成本影响。",
+    results: [
+      {
+        label: "每月用于资料整理",
+        detail: "花在人工报告与纸本整理上的时间",
+      },
+      {
+        label: "每月相关人力成本",
+        detail: "人工文档工作的直接人力成本",
+      },
+      {
+        label: "预计每年人工成本",
+        detail: "12 个月人工报告的真实成本",
+      },
+      {
+        label: "优化潜力",
+        detail: "有很高机会透过流程优化明显改善",
+      },
+    ],
+    gapTitle: "即使投入了这些时间与成本，您可能仍然缺少：",
+    gapPromptTitle: "人工报告通常仍然无法带来的能力",
+    gapItems: [
+      {
+        title: "标准化工作流程",
+        detail: "让项目执行步骤更一致、责任更清楚、跨项目协作更顺畅。",
+      },
+      {
+        title: "自动生成报告",
+        detail: "减少追资料、重整格式与反复整理汇总的时间。",
+      },
+      {
+        title: "可持续利用的数据",
+        detail: "同一份数据可继续用于仪表板、索赔支持、合规与管理可视度。",
+      },
+    ],
+    meaningLabel: "这代表什么：",
+    meaningText:
+      "这些都是可以重新投入到项目交付、质量、安全，以及利润表现上的人力与成本。",
+    meaningPromptText: "完成计算后，你会看到有多少时间与人力成本有机会重新投入到项目交付、质量、安全，以及利润表现上。",
+    formTitle: "获取免费的流程分析",
+    formLead:
+      "留下联系方式，我们将根据您的项目情况提供参考建议。",
+    formButton: "发送我的免费评估",
+    formSuccessButton: "资料已发送！",
+    formPrivacy: "你的信息会被妥善保管，我们尊重你的隐私。",
+    formDisclaimer: "没有压力，只提供对项目有帮助的洞察。",
+    formSending: "发送中...",
+    formSuccess: "你的流程评估请求已发送。",
+    formError: "发送流程评估请求时出现问题，请稍后再试。",
+    formRequiredField: "请输入邮箱和电话号码。",
+    formInvalidEmail: "请输入有效的邮箱地址。",
+    formFields: {
+      fullName: "姓名",
+      company: "公司名称",
+      email: "邮箱",
+      phone: "电话 / WhatsApp",
+    },
+  },
+  experience: {
+    eyebrow: "Manageable 背后的经验",
+    title: "这套产品方向，建立在对建筑文档管理现实压力的尊重之上。",
+    lead: "Manageable 不只是一个软件界面。它的方向，是从如何把现场记录、审批流程与管理输出真正管起来的现实需求出发。",
+    evidence: [
+      {
+        value: "运营优先",
+        label: "设计原则",
+        detail: "工作流从运营纪律出发，而不是空泛的软件术语。",
+      },
+      {
+        value: "可配置",
+        label: "贴近项目现实",
+        detail: "表单与流程结构可以反映你团队当前的运作方式。",
+      },
+      {
+        value: "重视落地",
+        label: "推广思维",
+        detail: "长期目标是让现场团队真正能持续使用的数字化。",
+      },
+    ],
+  },
+  pilot: {
+    eyebrow: "从哪里开始",
+    title: "从一个流程开始。",
+    highlight: "逐步实现项目数字化。",
+    lead: "无需一次性改变现有做法。Manageable 从您熟悉的流程开始，让团队在项目持续推进的同时，逐步完成数字化。",
+    points: [
+      {
+        title: "先从一个流程开始",
+        detail: "从最常用、最容易落地的流程开始。",
+      },
+      {
+        title: "看见实际改善",
+        detail: "减少资料整理时间，提升项目可视度与协作效率。",
+      },
+      {
+        title: "验证成效后再扩展",
+        detail: "先做好一个流程，再逐步扩展到更多项目流程。",
+      },
+    ],
+    note: {
+      eyebrow: "数字化不必一步到位",
+      title: "与其等待完美的开始，不如先实现真正的改善。",
+      detail: "数字化不是一次完成，而是每一步都带来实际改善。",
+      accent: "先从小处开始，快速学习，持续优化。",
+      cta: "从一个流程开始",
+    },
+    checklist: [
+      {
+        title: "不影响现有项目运作",
+        detail: "团队依然可以按今天的方式继续工作。",
+      },
+      {
+        title: "不需要大规模重新培训",
+        detail: "流程熟悉，上手更轻，才会真正被使用。",
+      },
+      {
+        title: "不需要一次性全面更换流程",
+        detail: "我们会用渐进而安全的方式引入新流程。",
+      },
+      {
+        title: "小范围尝试，更容易看见成果",
+        detail: "更早看到成效，也更容易建立团队信心。",
+      },
+      {
+        title: "看到成效后再扩展",
+        detail: "节奏和优先级，始终由你来掌握。",
+      },
+    ],
+  },
+  vision: {
+    eyebrow: "长期愿景",
+    title: "从更好的文件管理，走向更好的项目运营模式。",
+    lead: "长期目标不只是更快完成文书工作，而是建立一个信息只需录入一次、可信度更高、还能被执行、报告与管理反复复用的建筑运营环境。",
+    points: [
+      {
+        title: "项目运营记忆",
+        detail: "项目资料更容易追溯、审查，并在长期中形成组织经验。",
+      },
+      {
+        title: "管理可视度",
+        detail: "管理层不必等到厚重的人工汇总，便能更早看到现场真实情况。",
+      },
+      {
+        title: "渐进式数字化",
+        detail: "团队可以从一个稳定流程开始，逐步扩展成更完整的数字运营体系。",
+      },
+    ],
+  },
+  contactSection: {
+    eyebrow: "联系 / 演示",
+    title: "先了解您的项目流程，再决定下一步。",
+    lead: "我们可以先聊你目前的文档负担、报告摩擦点，以及最适合拿来做试点的流程。",
+    points: [
+      {
+        title: "从您的项目实际情况出发",
+        detail: "我们先了解目前的作业方式、挑战与改善目标。",
+      },
+      {
+        title: "给出可执行建议",
+        detail: "根据实际情况提供具体且可落地的建议。",
+      },
+      {
+        title: "不急着做决定",
+        detail: "先了解是否适合，再决定下一步。",
+      },
+    ],
+    form: {
+      company: "公司名称",
+      companyPlaceholder: "例如：ABC Construction Sdn Bhd",
+      email: "工作邮箱",
+      emailPlaceholder: "例如：john@company.com",
+      phone: "电话号码",
+      phonePlaceholder: "例如：012-345 6789",
+      message: "项目情况（选填）",
+      messagePlaceholder: "欢迎简单介绍您的项目、目前的流程或遇到的挑战……",
+      privacy: "你的资料会被妥善处理，我们尊重你的隐私。",
+      button: "获取流程建议",
+      sending: "发送中...",
+      success: "资料已发送！",
+      error: "发送资料时出现问题，请稍后再试。",
+      requiredField: "请填写此栏位。",
+      invalidEmail: "请输入有效的工作邮箱。",
+    },
+    disclaimer:
+      "提交后，即表示你同意我们可根据你的咨询内容联系你，并安排演示。",
   },
   footer: {
-    lead: "Manageable 帮助建筑团队把现场数据结构化，并自动化报告流程。",
-    rights: "版权所有。"
+    lead: "Manageable 协助建筑团队建立更清晰的流程、更完整的记录，以及更高效的项目管理方式。",
+    rights: "版权所有。",
   },
   privacyModal: {
     title: "隐私政策",
-    lead: "在预约演示或向我们发送消息前，请先了解我们如何处理你的联系资料。"
+    lead: "在联系或申请演示前，请先了解我们如何处理你的联系资料。",
   },
   privacyPolicy: {
-    eyebrow: "法律信息",
+    eyebrow: "法律",
     title: "隐私政策",
     updatedLabel: "最后更新：",
-    lead: "本隐私政策说明 Manageable 背后的公司 DTB DATABYTES SOFTWARE SERVICES 如何收集、使用并保护你通过本网站提交的个人信息。",
+    lead: "本隐私政策说明 Manageable 背后的公司 DTB DATABYTES SOFTWARE SERVICES，如何收集、使用及保护你通过本网站提交的个人信息。",
     sections: [
       {
         title: "1. 我们收集的信息",
-        intro: "当你联系我们或预约演示时，我们可能会收集：",
-        items: ["你的姓名", "你的工作邮箱地址", "你的公司名称", "你提交的信息或项目细节", "你选择通过电子邮件、WhatsApp 或日历预约分享的任何信息"]
+        intro: "当你联系我们或申请演示时，我们可能会收集：",
+        items: [
+          "你的工作邮箱",
+          "你的公司名称",
+          "你的电话号码",
+          "你提交的信息或项目说明",
+          "你通过邮件、WhatsApp 或未来预约工具主动提供的任何资料",
+        ],
       },
       {
         title: "2. 我们如何使用你的信息",
         intro: "我们会将这些信息用于：",
-        items: ["回复你的咨询", "安排并提供演示", "了解你的运营需求并评估我们的服务是否适合你", "跟进你对 Manageable 及 DTB DATABYTES SOFTWARE SERVICES 相关服务所请求的信息", "改进我们的网站和业务沟通"]
+        items: [
+          "回应你的咨询",
+          "安排和提供演示",
+          "了解你的运营需求并评估服务适配度",
+          "跟进你所要求的 Manageable 及 DTB DATABYTES SOFTWARE SERVICES 相关信息",
+          "改进我们的网站和业务沟通",
+        ],
       },
       {
         title: "3. 第三方服务",
-        intro: "本网站可能会使用 Zoho Calendar 预约链接、电子邮件服务商和 WhatsApp 等第三方服务来帮助我们与你沟通。当你使用这些服务时，你的信息也可能按照它们各自的隐私做法被处理。"
+        intro:
+          "本网站可能会使用第三方服务，例如邮件服务、WhatsApp，以及未来的预约或分析工具，以协助我们与你沟通。当你使用这些服务时，你的信息也可能按照这些服务各自的隐私政策被处理。",
       },
       {
         title: "4. 数据共享",
-        intro: "我们不会出售你的个人信息。只有在运营网站、管理沟通或支持演示预约确有需要时，我们才可能与服务提供商共享相关信息。"
+        intro:
+          "我们不会出售你的个人信息。只有在运营网站、处理沟通或安排演示所需时，我们才可能与服务提供商共享相关信息。",
       },
       {
         title: "5. 数据保留",
-        intro: "除非法律要求更长的保留期限，否则我们会在合理所需时间内保留与你的咨询和演示相关的信息，以便回复你、维护业务记录并支持后续沟通。"
+        intro:
+          "除非法律要求更长保留期，否则我们会在合理必要的期间内保留与你的咨询和演示相关的信息，以便回复你、保存业务记录并支持后续沟通。",
       },
       {
         title: "6. 你的选择",
-        intro: "在遵守我们依法或出于运营需要保留某些记录的前提下，你可以要求访问、更正或删除你与我们共享的个人信息。"
+        intro:
+          "你可以要求查阅、更正或删除你提交给我们的个人信息，但需受限于我们在法律或运营上必须保留某些记录的义务。",
       },
       {
         title: "7. 联系方式",
-        intro: "如果你对 DTB DATABYTES SOFTWARE SERVICES 或 Manageable 的隐私事宜有任何问题或请求，请通过以下邮箱联系我们：",
-        isContact: true
+        intro:
+          "如有与 DTB DATABYTES SOFTWARE SERVICES 或 Manageable 相关的隐私问题或请求，请通过以下邮箱联系我们",
+        isContact: true,
       },
       {
-        title: "8. 本政策的变更",
-        intro: "我们可能会不时更新本隐私政策。任何变更都会连同更新后的生效日期发布在本页面。"
-      }
-    ]
-  }
+        title: "8. 政策变更",
+        intro:
+          "我们可能会不时更新本隐私政策。任何更改都会发布在此页面，并附上更新后的生效日期。",
+      },
+    ],
+  },
 };
 
 export function getDictionary(locale: Locale): Dictionary {
