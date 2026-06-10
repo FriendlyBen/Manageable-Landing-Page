@@ -1,19 +1,24 @@
+"use client";
+
+import { useEffect, useRef, useState, type FormEvent } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import heroScreenshot from "@/assets/desktop+mobile_cropped-Photoroom.png";
+import editWorkflowFieldsScreenshot from "@/assets/edit workflow fields.png";
 import excelLogo from "@/assets/excel_logo.png";
 import googleDriveLogo from "@/assets/google_drive_logo.png";
+import howToBeginFlower from "@/assets/howToBegin/howToBegin_flower.png";
 import whatsAppLogo from "@/assets/WhatsApp_Logo_green.svg";
-import CapabilitiesShowcase from "@/components/capabilities-showcase";
+import workflowMapFirstStep from "@/assets/workflow_map/workflow_map_firstStep.png";
+import workflowMapMobilePicture from "@/assets/workflow_map/workflow_map_mobilePicture.png";
+import workflowMapStatistics from "@/assets/workflow_map/workflow_map_statistics.png";
+import AssessmentCalculator, { type AssessmentFormInputs } from "@/components/assessment-calculator";
+import ContactForm from "@/components/contact-form";
 import LanguageSwitcher from "@/components/language-switcher";
 import PrivacyPolicyModal from "@/components/privacy-policy-modal";
 import { getDictionary, type Locale } from "@/lib/i18n";
-
-const calendarLocaleMap: Record<Locale, string> = {
-  en: "en",
-  "zh-CN": "zh"
-};
 
 const softwareSchema = {
   "@context": "https://schema.org",
@@ -22,7 +27,7 @@ const softwareSchema = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   description:
-    "Construction management SaaS that structures site data and automates reporting for contractors and developers.",
+    "Construction operations software that helps teams structure documentation workflows and reduce reporting friction.",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -30,10 +35,335 @@ const softwareSchema = {
   }
 };
 
+const heroFeatureIcons = [
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7 3.75h7.5l4.5 4.5V19.5A1.5 1.5 0 0 1 17.5 21h-11A1.5 1.5 0 0 1 5 19.5v-14A1.75 1.75 0 0 1 6.75 3.75Zm7 .75v4h4" />
+    <path d="M8 12h8M8 15.5h8M8 8.5h3" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="7.25" />
+    <path d="M12 8.25v4.2l2.9 1.7" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M5 18.5h14M7.5 16V10.5M12 16V7.5M16.5 16V12.5" />
+    <path d="M6 6.5h12" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3.75 18.75 6v5.63c0 4.08-2.8 7.85-6.75 8.62-3.95-.77-6.75-4.54-6.75-8.62V6L12 3.75Z" />
+    <path d="m9.4 12.2 1.72 1.72 3.48-3.54" />
+  </svg>
+];
+
+const howItWorksIcons = [
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7 3.75h7.5l4.5 4.5V19.5A1.5 1.5 0 0 1 17.5 21h-11A1.5 1.5 0 0 1 5 19.5v-14A1.75 1.75 0 0 1 6.75 3.75Zm7 .75v4h4" />
+    <path d="M8 12h8M8 15.5h5.5M8 8.5h3" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="4.75" y="5.25" width="5.5" height="5.5" rx="1.15" />
+    <rect x="13.75" y="5.25" width="5.5" height="5.5" rx="1.15" />
+    <rect x="9.25" y="13.25" width="5.5" height="5.5" rx="1.15" />
+    <path d="M10.25 8h3.5M12 10.75v2.25" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7 3.75h7.5l4.5 4.5V19.5A1.5 1.5 0 0 1 17.5 21h-11A1.5 1.5 0 0 1 5 19.5v-14A1.75 1.75 0 0 1 6.75 3.75Zm7 .75v4h4" />
+    <path d="M8 12h8M8 15.5h8M8 8.5h3" />
+    <circle cx="17.4" cy="17.4" r="2.2" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="7.4" y="3.5" width="9.2" height="17" rx="2.2" />
+    <path d="M10 6.8h4M11.15 17.2h1.7" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 18.5h12M8.5 16V11M12 16V7.5M15.5 16V9.75" />
+    <path d="M5.5 5.5h13" />
+  </svg>
+];
+
+const pilotStepIcons = [
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M8 3.75h8l3 3v12.75A1.5 1.5 0 0 1 17.5 21h-11A1.5 1.5 0 0 1 5 19.5v-14A1.75 1.75 0 0 1 6.75 3.75H8Z" />
+    <path d="M13 3.75v4h4" />
+    <path d="M8.5 11h7M8.5 14.5H13M8.5 8h3" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="6.8" />
+    <circle cx="12" cy="12" r="1.9" />
+    <path d="M12 3.75v3.1M12 17.15v3.1M3.75 12h3.1M17.15 12h3.1" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 16.5 10.4 12l2.8 2.8 5.05-5.05" />
+    <path d="M13.75 9.75H19v5.25" />
+  </svg>
+];
+
+const pilotChecklistIcons = [
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3.75 18.5 6v5.45c0 3.95-2.6 7.56-6.5 8.3-3.9-.74-6.5-4.35-6.5-8.3V6L12 3.75Z" />
+    <path d="m9.3 11.85 1.72 1.7 3.68-3.78" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="9" cy="10" r="2.3" />
+    <path d="M5.8 17.2c.68-2.15 2.38-3.45 5.15-3.45 1.83 0 3.17.56 4.15 1.56" />
+    <circle cx="16.7" cy="8.4" r="1.65" />
+    <path d="M15.2 17h4.8" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="m11.2 3.75-4.5 8.1h4.1L9.95 20.25l7.35-9.45h-4.2l2.05-7.05Z" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M5.75 18.5h12.5M8.5 16V10.9M12 16V7.25M15.5 16v-5.6" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="7.1" />
+    <path d="M12 8v4.4l2.85 1.75" />
+  </svg>
+];
+
+const contactPointIcons = [
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="9" cy="10" r="2.4" />
+    <path d="M4.9 17.15c.7-2.22 2.5-3.55 5.38-3.55 1.95 0 3.38.6 4.43 1.68" />
+    <circle cx="16.95" cy="8.35" r="1.75" />
+    <path d="M15.55 16.85H20.5" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="6.2" y="4.8" width="11.6" height="14.4" rx="2" />
+    <path d="M9 8.25h6M9 11.6h6M9 14.95h3.3" />
+    <path d="m10.2 3.75 1.05 1.1h1.5l1.05-1.1" />
+  </svg>,
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3.75 18.55 6v5.5c0 3.98-2.62 7.62-6.55 8.37-3.93-.75-6.55-4.39-6.55-8.37V6L12 3.75Z" />
+    <path d="m9.45 11.9 1.7 1.7 3.4-3.55" />
+  </svg>,
+];
+
+function renderHowItWorksVisual(index: number, title: string) {
+  if (index === 0) {
+    return (
+      <div className="how-visual-surface how-visual-image how-visual-docs">
+        <Image
+          src={workflowMapFirstStep}
+          alt={`${title} preview`}
+          className="how-visual-shot"
+          sizes="(max-width: 760px) 92vw, 34vw"
+        />
+      </div>
+    );
+  }
+
+  if (index === 1) {
+    return (
+      <div className="how-visual-surface how-visual-workflow-graphic" aria-hidden="true">
+        <div className="workflow-preview-card">
+          <span className="workflow-preview-title">Workflow Setup</span>
+          <div className="workflow-preview-list">
+            {[
+              { label: "Draft", tone: "draft" },
+              { label: "Submitted", tone: "submitted" },
+              { label: "Under Review", tone: "review" },
+              { label: "Approved", tone: "approved" },
+              { label: "Closed", tone: "closed" }
+            ].map((item) => (
+              <div key={item.label} className={`workflow-preview-item workflow-preview-${item.tone}`}>
+                <span className="workflow-preview-dot" />
+                <span className="workflow-preview-line" />
+                <strong>{item.label}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (index === 2) {
+    return (
+      <div className="how-visual-surface how-visual-image how-visual-form">
+        <Image
+          src={editWorkflowFieldsScreenshot}
+          alt={`${title} preview`}
+          className="how-visual-shot"
+          sizes="(max-width: 760px) 92vw, 34vw"
+        />
+      </div>
+    );
+  }
+
+  if (index === 3) {
+    return (
+      <div className="how-visual-surface how-visual-image how-visual-mobile-picture">
+        <Image
+          src={workflowMapMobilePicture}
+          alt={`${title} preview`}
+          className="how-visual-shot"
+          sizes="(max-width: 760px) 92vw, 34vw"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="how-visual-surface how-visual-image how-visual-statistics">
+      <Image
+        src={workflowMapStatistics}
+        alt={`${title} preview`}
+        className="how-visual-shot"
+        sizes="(max-width: 760px) 92vw, 34vw"
+      />
+    </div>
+  );
+}
+
 export default function HomePage({ locale }: { locale: Locale }) {
   const currentYear = new Date().getFullYear();
   const dictionary = getDictionary(locale);
   const pageClassName = locale === "zh-CN" ? "page page-zh" : "page";
+  const heroTitleLine1Parts =
+    locale === "zh-CN"
+      ? [dictionary.hero.title.line1.replace(/\n/g, "")]
+      : dictionary.hero.title.line1.split("\n");
+  const heroTitleLine2Parts =
+    locale === "zh-CN"
+      ? [dictionary.hero.title.line2.replace(/\n/g, "")]
+      : dictionary.hero.title.line2.split("\n");
+  const [assessmentInputs, setAssessmentInputs] = useState<AssessmentFormInputs>({
+    projects: "",
+    staff: "",
+    hoursPerDay: "",
+  });
+  const [assessmentContact, setAssessmentContact] = useState({
+    email: "",
+    phone: "",
+  });
+  const [assessmentWebsite, setAssessmentWebsite] = useState("");
+  const [assessmentContactErrors, setAssessmentContactErrors] = useState<{
+    email?: string;
+    phone?: string;
+  }>({});
+  const [assessmentFormState, setAssessmentFormState] = useState<{
+    status: "idle" | "sending" | "success" | "error";
+    message: string;
+  }>({
+    status: "idle",
+    message: "",
+  });
+  const assessmentSuccessTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const assessmentStartedAtRef = useRef(Date.now());
+
+  useEffect(() => {
+    return () => {
+      if (assessmentSuccessTimeoutRef.current) {
+        clearTimeout(assessmentSuccessTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  function updateAssessmentContact(field: "email" | "phone", value: string) {
+    if (assessmentSuccessTimeoutRef.current) {
+      clearTimeout(assessmentSuccessTimeoutRef.current);
+      assessmentSuccessTimeoutRef.current = null;
+    }
+
+    setAssessmentContact((current) => ({
+      ...current,
+      [field]: value,
+    }));
+
+    setAssessmentContactErrors((current) => {
+      if (!current[field]) {
+        return current;
+      }
+
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+
+    if (assessmentFormState.status !== "idle") {
+      setAssessmentFormState({
+        status: "idle",
+        message: "",
+      });
+    }
+  }
+
+  async function submitAssessmentRequest(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const email = assessmentContact.email.trim();
+    const phone = assessmentContact.phone.trim();
+    const nextErrors: {
+      email?: string;
+      phone?: string;
+    } = {};
+
+    if (!email) {
+      nextErrors.email = dictionary.assessment.formRequiredField;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = dictionary.assessment.formInvalidEmail;
+    }
+
+    if (!phone) {
+      nextErrors.phone = dictionary.assessment.formRequiredField;
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setAssessmentContactErrors(nextErrors);
+      setAssessmentFormState({
+        status: "idle",
+        message: "",
+      });
+      return;
+    }
+
+    setAssessmentContactErrors({});
+    setAssessmentFormState({
+      status: "sending",
+      message: "",
+    });
+
+    try {
+      const response = await fetch("/api/workflow-assessment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          phone,
+          locale,
+          assessmentInputs,
+          website: assessmentWebsite,
+          startedAt: assessmentStartedAtRef.current,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send workflow assessment");
+      }
+
+      setAssessmentFormState({
+        status: "success",
+        message: dictionary.assessment.formSuccess,
+      });
+      setAssessmentWebsite("");
+      assessmentStartedAtRef.current = Date.now();
+      assessmentSuccessTimeoutRef.current = setTimeout(() => {
+        setAssessmentFormState({
+          status: "idle",
+          message: "",
+        });
+        assessmentSuccessTimeoutRef.current = null;
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to send workflow assessment request", error);
+      setAssessmentFormState({
+        status: "error",
+        message: dictionary.assessment.formError,
+      });
+    }
+  }
 
   return (
     <main className={pageClassName}>
@@ -43,16 +373,23 @@ export default function HomePage({ locale }: { locale: Locale }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
       />
 
-      <section className="hero">
-        <div className="hero-wave" aria-hidden="true" />
+      <section className="hero-section" id="top">
+        <div className="hero-backdrop" aria-hidden="true" />
         <div className="hero-shell">
-          <header className="hero-nav">
-            <a href="#top" className="brand" id="top" aria-label={dictionary.ui.homeAriaLabel}>
+          <header className="site-nav">
+            <a href="#top" className="brand" aria-label={dictionary.ui.homeAriaLabel}>
               manageable<span>.</span>
             </a>
-            <div className="hero-actions">
+            <nav className="nav-links" aria-label="Primary">
+              {dictionary.nav.map((item) => (
+                <a key={item.href} href={item.href}>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+            <div className="site-nav-actions">
               <LanguageSwitcher currentLocale={locale} />
-              <a className="btn nav-btn" href="https://app.manageable.my">
+              <a className="btn ghost subtle" href="https://app.manageable.my">
                 {dictionary.ui.login}
               </a>
             </div>
@@ -60,44 +397,86 @@ export default function HomePage({ locale }: { locale: Locale }) {
 
           <div className="hero-grid">
             <div className="hero-copy">
+              {/* <p className="eyebrow">{dictionary.hero.eyebrow}</p> */}
               <h1 className="hero-title">
-                <span className="hero-line hero-line-1">{dictionary.hero.line1}</span>
-                <span className="hero-line hero-line-2">{dictionary.hero.line2}</span>
-                <span className="hero-line hero-line-3">{dictionary.hero.line3}</span>
+                <span className="hero-title-block hero-title-block-1">
+                  {heroTitleLine1Parts.map((part) => (
+                    <span key={part} className="hero-title-line hero-title-line-1">
+                      {part}
+                    </span>
+                  ))}
+                </span>
+                <span className="hero-title-block hero-title-block-2">
+                  {heroTitleLine2Parts.map((part) => (
+                    <span key={part} className="hero-title-line hero-title-line-2">
+                      {part}
+                    </span>
+                  ))}
+                </span>
               </h1>
-              <p className="lead">{dictionary.hero.lead}</p>
+              {/* <p className="hero-lead">{dictionary.hero.lead}</p> */}
+              <div className="hero-feature-row" aria-label="Hero feature highlights">
+                {dictionary.hero.featureHighlights.map((item, index) => (
+                  <div key={item} className="hero-feature-pill">
+                    <span className="hero-feature-icon">{heroFeatureIcons[index]}</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
               <div className="cta-row">
-                <a className="btn primary" href="#book-demo">
-                  {dictionary.ui.bookDemo}
+                <a className="btn primary" href="#contact-demo">
+                  <span>{dictionary.hero.primaryCta}</span>
+                  <span className="btn-icon" aria-hidden="true">
+                    →
+                  </span>
                 </a>
-                <a className="btn ghost" href="#explore">
-                  {dictionary.ui.explorePlatform}
+                <a className="btn ghost" href="#how-it-works">
+                  <span>{dictionary.hero.secondaryCta}</span>
+                  <span className="btn-icon" aria-hidden="true">
+                    ▶
+                  </span>
                 </a>
               </div>
+              {/* <p className="hero-trust-line">{dictionary.hero.trustLine}</p> */}
             </div>
 
-            <div className="hero-visual" aria-hidden="true">
-              <Image
-                src={heroScreenshot}
-                alt=""
-                className="hero-shot"
-                priority
-                sizes="(max-width: 760px) 92vw, 42vw"
-              />
+            <div className="hero-visual">
+              <div className="visual-frame">
+                <div className="visual-panel visual-panel-top">
+                  <span>{dictionary.hero.visualEyebrow}</span>
+                  <strong>{dictionary.hero.visualTitle}</strong>
+                </div>
+                <Image
+                  src={heroScreenshot}
+                  alt="Manageable dashboard and mobile preview"
+                  className="hero-shot"
+                  priority
+                  sizes="(max-width: 900px) 92vw, 38vw"
+                />
+                <div className="visual-panel visual-panel-bottom">
+                  {dictionary.hero.metrics.map((metric) => (
+                    <div key={metric.label} className="metric-chip">
+                      <strong>{metric.value}</strong>
+                      <h3>{metric.title}</h3>
+                      <span>{metric.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pain">
-        <p className="eyebrow">{dictionary.pains.eyebrow}</p>
-        <h2>{dictionary.pains.title}</h2>
-        <p className="pain-lead">{dictionary.pains.lead}</p>
+      <section className="pain" id="familiar">
+        <p className="eyebrow">{dictionary.familiar.eyebrow}</p>
+        <h2>{dictionary.familiar.title}</h2>
+        <p className="pain-lead">{dictionary.familiar.lead}</p>
         <ul className="pain-grid">
-          {dictionary.pains.items.map((item, index) => (
+          {dictionary.familiar.items.map((item, index) => (
             <li key={item.title} className={`pain-card pain-card-${index + 1}`}>
               <span className="pain-tag">{item.tag}</span>
-              <h3>{item.title}?</h3>
+              <h3>{item.title}</h3>
               <p>{item.detail}</p>
               {index === 0 ? (
                 <div className="pain-figure pain-figure-logos" aria-hidden="true">
@@ -147,113 +526,318 @@ export default function HomePage({ locale }: { locale: Locale }) {
         </ul>
       </section>
 
-      <section className="capabilities" id="explore">
-        <div className="section-head">
-          <p className="eyebrow">{dictionary.capabilities.eyebrow}</p>
-          <h2>{dictionary.capabilities.title}</h2>
+      <section className="content-section" id="how-it-works">
+        <div className="section-heading how-it-works-heading">
+          <p className="eyebrow">{dictionary.howItWorks.eyebrow}</p>
+          <h2>{dictionary.howItWorks.title}</h2>
+          <p>{dictionary.howItWorks.lead}</p>
         </div>
-        <CapabilitiesShowcase locale={locale} />
+        <div className="how-workflow">
+          <div className="how-workflow-spine" aria-hidden="true" />
+          {dictionary.howItWorks.steps.map((step, index) => {
+            const isReversed = index % 2 === 1;
+
+            return (
+              <article
+                key={step.id}
+                className={`how-workflow-row${isReversed ? " is-reversed" : ""}`}
+              >
+                <div className="how-workflow-panel how-workflow-copy">
+                  <div className="how-step-meta">
+                    <span className="how-step-id">{step.id}</span>
+                    <span className="how-step-kicker">{`Step ${index + 1}`}</span>
+                  </div>
+                  <h3>{step.title}</h3>
+                  <ul className="how-step-points" aria-label={`${step.title} highlights`}>
+                    {step.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <p>{step.detail}</p>
+                </div>
+
+                <div className="how-workflow-node" aria-hidden="true">
+                  <span className="how-node-icon">{howItWorksIcons[index]}</span>
+                </div>
+
+                <div className="how-workflow-panel how-workflow-visual">
+                  <div className="how-visual-frame">
+                    <span className="how-visual-kicker">Preview</span>
+                    {renderHowItWorksVisual(index, step.title)}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </section>
 
-      <section className="authority">
-        <div className="authority-inner">
-          <div className="authority-copy">
-            <p className="eyebrow">{dictionary.authority.eyebrow}</p>
-            <span className="authority-pill">{dictionary.authority.pill}</span>
-            <h2>{dictionary.authority.title}</h2>
-            <p>{dictionary.authority.lead}</p>
+      {/* <section className="content-section" id="workflow-examples">
+        <div className="section-heading">
+          <p className="eyebrow">{dictionary.workflows.eyebrow}</p>
+          <h2>{dictionary.workflows.title}</h2>
+          <p>{dictionary.workflows.lead}</p>
+        </div>
+        <div className="card-grid workflows-grid">
+          {dictionary.workflows.examples.map((example) => (
+            <article key={example.title} className="info-card workflow-card">
+              <h3>{example.title}</h3>
+              <p>{example.summary}</p>
+              <ul className="detail-list">
+                {example.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section> */}
+
+      <section className="content-section assessment-section" id="assessment">
+        <div className="section-heading">
+          <p className="eyebrow">{dictionary.assessment.eyebrow}</p>
+          <h2>{dictionary.assessment.title}</h2>
+          <p>{dictionary.assessment.lead}</p>
+        </div>
+        <div className="assessment-layout">
+          <AssessmentCalculator
+            assessment={dictionary.assessment}
+            locale={locale}
+            onInputsChange={setAssessmentInputs}
+          />
+
+          <article className="assessment-card assessment-form-card">
+            <div className="assessment-form-heading">
+              <span className="assessment-form-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 4.5 14.25 7H18a1.5 1.5 0 0 1 1.5 1.5V12l-2.25 2.25L12 19.5l-5.25-5.25L4.5 12V8.5A1.5 1.5 0 0 1 6 7h3.75L12 4.5Z" />
+                  <path d="M8.5 11.5h7M12 8v7" />
+                </svg>
+              </span>
+              <div>
+                <h3>{dictionary.assessment.formTitle}</h3>
+                <p>{dictionary.assessment.formLead}</p>
+              </div>
+            </div>
+            <form
+              className="assessment-form"
+              onSubmit={submitAssessmentRequest}
+            >
+              <div className="bot-field" aria-hidden="true">
+                <label htmlFor="assessment-website">Website</label>
+                <input
+                  id="assessment-website"
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={assessmentWebsite}
+                  onChange={(event) => setAssessmentWebsite(event.target.value)}
+                />
+              </div>
+              <label>
+                <span>{dictionary.assessment.formFields.email}</span>
+                <input
+                  type="email"
+                  name="assessment_email"
+                  placeholder="you@company.com"
+                  value={assessmentContact.email}
+                  onChange={(event) => updateAssessmentContact("email", event.target.value)}
+                  aria-invalid={Boolean(assessmentContactErrors.email)}
+                  aria-describedby={assessmentContactErrors.email ? "assessment-email-error" : undefined}
+                />
+                {assessmentContactErrors.email ? (
+                  <small id="assessment-email-error" className="assessment-form-error">
+                    {assessmentContactErrors.email}
+                  </small>
+                ) : null}
+              </label>
+              <label>
+                <span>{dictionary.assessment.formFields.phone}</span>
+                <input
+                  type="text"
+                  name="assessment_phone"
+                  placeholder="012-345 6789"
+                  value={assessmentContact.phone}
+                  onChange={(event) => updateAssessmentContact("phone", event.target.value)}
+                  aria-invalid={Boolean(assessmentContactErrors.phone)}
+                  aria-describedby={assessmentContactErrors.phone ? "assessment-phone-error" : undefined}
+                />
+                {assessmentContactErrors.phone ? (
+                  <small id="assessment-phone-error" className="assessment-form-error">
+                    {assessmentContactErrors.phone}
+                  </small>
+                ) : null}
+              </label>
+              <p className="assessment-form-privacy">
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.5 10V7.75A3.5 3.5 0 0 1 12 4.25a3.5 3.5 0 0 1 3.5 3.5V10" />
+                    <rect x="6.25" y="10" width="11.5" height="9.75" rx="1.5" />
+                  </svg>
+                </span>
+                {dictionary.assessment.formPrivacy}
+              </p>
+              {assessmentFormState.status === "success" || assessmentFormState.status === "error" ? (
+                <p
+                  className={`assessment-form-status assessment-form-status-${assessmentFormState.status}`}
+                  role="status"
+                >
+                  {assessmentFormState.message}
+                </p>
+              ) : null}
+              <button
+                className={`btn primary assessment-submit${
+                  assessmentFormState.status === "success" ? " assessment-submit-success" : ""
+                }`}
+                type="submit"
+                disabled={assessmentFormState.status === "sending"}
+              >
+                <span>
+                  {assessmentFormState.status === "sending"
+                    ? dictionary.assessment.formSending
+                    : assessmentFormState.status === "success"
+                      ? dictionary.assessment.formSuccessButton
+                      : dictionary.assessment.formButton}
+                </span>
+                <span className="btn-icon" aria-hidden="true">
+                  {assessmentFormState.status === "success" ? "✓" : "→"}
+                </span>
+              </button>
+              <p className="assessment-form-disclaimer">{dictionary.assessment.formDisclaimer}</p>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      {/* <section className="content-section experience-section" id="experience">
+        <div className="section-heading">
+          <p className="eyebrow">{dictionary.experience.eyebrow}</p>
+          <h2>{dictionary.experience.title}</h2>
+          <p>{dictionary.experience.lead}</p>
+        </div>
+        <div className="card-grid evidence-grid">
+          {dictionary.experience.evidence.map((item) => (
+            <article key={item.label} className="info-card evidence-card">
+              <span className="evidence-value">{item.value}</span>
+              <h3>{item.label}</h3>
+              <p>{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section> */}
+
+      <section className="content-section pilot-section" id="pilot">
+        <p className="eyebrow pilot-section-eyebrow">{dictionary.pilot.eyebrow}</p>
+        <div className="pilot-layout">
+          <div className="pilot-hero">
+            <h2>
+              <span className="pilot-title-line">{dictionary.pilot.title}</span>
+              <span className="pilot-title-line pilot-title-highlight">
+                {dictionary.pilot.highlight}
+              </span>
+            </h2>
+            <p>{dictionary.pilot.lead}</p>
           </div>
-          <div className="authority-grid">
-            {dictionary.authority.cards.map((card, index) => (
-              <article key={card.title} className={`authority-card card-${index + 1}`}>
-                <h3>{card.title}</h3>
-                <p>{card.detail}</p>
-                <div className="authority-icons authority-icons-centered" aria-hidden="true">
-                  <div
-                    className={
-                      index === 0
-                        ? "authority-icon authority-icon-team"
-                        : index === 1
-                          ? "authority-icon authority-icon-brain"
-                          : index === 2
-                            ? "authority-icon authority-icon-money"
-                            : "authority-icon authority-icon-trend"
-                    }
-                  >
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        d={
-                          index === 0
-                            ? "M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5 1.34 3.5 3 3.5Zm-8 0c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13Zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.95 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5Z"
-                            : index === 1
-                              ? "M9.5 4.5A3.5 3.5 0 0 0 6 8c0 .4.07.78.2 1.14A3.75 3.75 0 0 0 7 16.5V18a1.5 1.5 0 0 0 1.5 1.5H11V14H9.5v-1.5H11v-2H9.5V9H11V4.5H9.5Zm5 0H13v5h1.5v1.5H13v2h1.5V14H13v5.5h2.5A1.5 1.5 0 0 0 17 18v-1.5a3.75 3.75 0 0 0 .8-7.36c.13-.36.2-.74.2-1.14a3.5 3.5 0 0 0-3.5-3.5Z"
-                              : index === 2
-                                ? "M11 3h2v2.1c1.72.24 3 1.24 3 3.02h-2.2c0-.74-.64-1.22-1.67-1.22-1.05 0-1.73.44-1.73 1.15 0 .61.43.95 1.96 1.33 2.32.58 3.87 1.3 3.87 3.5 0 1.85-1.37 3.02-3.23 3.28V19h-2v-2.1c-2.02-.25-3.48-1.47-3.48-3.45h2.24c0 .92.82 1.48 1.97 1.48 1.12 0 1.9-.45 1.9-1.22 0-.74-.62-1.06-2.23-1.47-2.14-.54-3.56-1.28-3.56-3.35 0-1.76 1.35-2.93 3.16-3.2V3Z"
-                                : "M5 18.5h14v1.5H3V5h2v13.5Zm2-3.25 3.5-3.5 2.5 2.5L18 9.25V12h2V6h-6v2h2.75l-3.75 3.75-2.5-2.5L5.5 13.5 7 15.25Z"
-                        }
-                      />
-                    </svg>
-                  </div>
+          <div className="pilot-steps">
+            {dictionary.pilot.points.map((point, index) => (
+              <article key={point.title} className="pilot-step-card">
+                <span className="pilot-step-icon">{pilotStepIcons[index]}</span>
+                <div className="pilot-step-copy">
+                  <h3>{`${index + 1}. ${point.title}`}</h3>
+                  <p>{point.detail}</p>
                 </div>
               </article>
             ))}
           </div>
-          <div className="authority-offer">{dictionary.authority.offer}</div>
+        </div>
+
+        <div className="pilot-support">
+          <article className="pilot-note-card">
+            <div className="pilot-note-visual" aria-hidden="true">
+              <Image
+                className="pilot-note-flower"
+                src={howToBeginFlower}
+                alt=""
+                sizes="(max-width: 760px) 150px, 132px"
+              />
+            </div>
+
+            <div className="pilot-note-copy">
+              <p className="eyebrow">{dictionary.pilot.note.eyebrow}</p>
+              <h3>{dictionary.pilot.note.title}</h3>
+              <p>{dictionary.pilot.note.detail}</p>
+              <p className="pilot-note-accent">
+                {dictionary.pilot.note.accent}
+              </p>
+              <a className="btn pilot-note-cta" href="#contact-demo">
+                <span className="pilot-note-cta-icon" aria-hidden="true">
+                  ▶
+                </span>
+                <span>{dictionary.pilot.note.cta}</span>
+              </a>
+            </div>
+          </article>
+
+          <div className="pilot-checklist">
+            {dictionary.pilot.checklist.map((item, index) => (
+              <article key={item.title} className="pilot-check-item">
+                <span className="pilot-check-icon">{pilotChecklistIcons[index]}</span>
+                <div className="pilot-check-copy">
+                  <h3>{item.title}</h3>
+                  <p>{item.detail}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="strong-cta" id="book-demo">
-        <div className="strong-cta-head">
-          <h2>{dictionary.cta.title}</h2>
-          <h3>{dictionary.cta.subtitle}</h3>
-          <p className="cta-subhead">{dictionary.cta.lead}</p>
+      {/* <section className="content-section vision-section" id="vision">
+        <div className="section-heading">
+          <p className="eyebrow">{dictionary.vision.eyebrow}</p>
+          <h2>{dictionary.vision.title}</h2>
+          <p>{dictionary.vision.lead}</p>
         </div>
+        <div className="card-grid vision-grid">
+          {dictionary.vision.points.map((point) => (
+            <article key={point.title} className="info-card vision-card">
+              <h3>{point.title}</h3>
+              <p>{point.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section> */}
 
-        <div className="strong-cta-layout">
-          <article className="calendar-embed" aria-label={dictionary.ui.bookDemoCalendarAria}>
-            <header>
-              <span>{dictionary.ui.bookDemoCard}</span>
-              <small>{dictionary.ui.appointmentCalendar}</small>
-            </header>
+      <section className="contact-section" id="contact-demo">
+        <div className="contact-shell">
+          <div className="contact-layout">
+            <div className="contact-copy">
+              <div className="section-heading compact">
+                <p className="eyebrow">{dictionary.contactSection.eyebrow}</p>
+                <h2>{dictionary.contactSection.title}</h2>
+                <p>{dictionary.contactSection.lead}</p>
+              </div>
+              <div className="contact-points">
+                {dictionary.contactSection.points.map((point, index) => (
+                  <article key={point.title} className="contact-point">
+                    <span className="contact-point-icon" aria-hidden="true">
+                      {contactPointIcons[index]}
+                    </span>
+                    <div className="contact-point-copy">
+                      <h3>{point.title}</h3>
+                      <p>{point.detail}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
 
-            <iframe
-              src={`https://calendar.zoho.com/eventreqForm/zz080112303a6922b3089c7fbabd12a5fada684c7dc71285226381e6eaae31d7516e6195a9fedd04c8fc76efca74c3747e89264e0a?theme=0&l=${calendarLocaleMap[locale]}&tz=Asia%2FSingapore`}
-              title="bentleyteh"
-              height="500"
-              width="350"
-            ></iframe>
-          </article>
-
-          <form className="contact-form" action="mailto:2001bentleyteh@gmail.com" method="post" encType="text/plain">
-            <label htmlFor="name">{dictionary.ui.formName}</label>
-            <input id="name" name="name" type="text" required />
-
-            <label htmlFor="email">{dictionary.ui.formEmail}</label>
-            <input id="email" name="email" type="email" required />
-
-            <label htmlFor="company">{dictionary.ui.formCompany}</label>
-            <input id="company" name="company" type="text" />
-
-            <label htmlFor="message">{dictionary.cta.messagePrompt}</label>
-            <textarea id="message" name="message" rows={4} required />
-
-            <button className="btn primary" type="submit">
-              {dictionary.ui.sendEmail}
-            </button>
-
-            <p className="form-disclaimer">
-              {dictionary.cta.disclaimer}
-              <Link href={`/${locale}/privacy-policy`}> {dictionary.ui.privacyPolicy}</Link>.
-            </p>
-
-            <p className="contact-number">
-              <span className="contact-number-label">{dictionary.ui.contactUsAt}</span>
-              <a href="https://wa.me/60126867119" target="_blank" rel="noreferrer">
-                <Image className="whatsapp-icon" src={whatsAppLogo} alt="" />
-                +6012-6867-119
-              </a>
-            </p>
-          </form>
+            <ContactForm
+              copy={dictionary.contactSection.form}
+              disclaimer={dictionary.contactSection.disclaimer}
+            />
+          </div>
         </div>
       </section>
 
@@ -266,7 +850,6 @@ export default function HomePage({ locale }: { locale: Locale }) {
         </div>
         <nav className="site-footer-links" aria-label="Legal and support links">
           <Link href={`/${locale}/privacy-policy`}>{dictionary.ui.privacyPolicy}</Link>
-          <a href="mailto:2001bentleyteh@gmail.com">{dictionary.ui.contact}</a>
           <a href="https://app.manageable.my">{dictionary.ui.login}</a>
         </nav>
       </footer>
